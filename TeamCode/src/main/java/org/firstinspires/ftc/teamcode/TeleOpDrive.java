@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.teleop.Robot;
 
 @TeleOp(name = "T1_TeleDrive", group = "CBot")
 //@Disabled
-public class TeleDrive extends OpMode {
+public class TeleOpDrive extends OpMode {
 
     Robot cBot = null;
 
