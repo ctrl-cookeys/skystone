@@ -26,3 +26,10 @@ build/
 
 *ASUS_PC_01*
 
+# Specific Files
+TeamCode/src/main/java/org/firstinspires/ftc/teamcode/autonomous/DriveTrain.java
+TeamCode/src/main/java/org/firstinspires/ftc/teamcode/autonomous/IMU.java
+
+TeamCode/docs
+AutonomousPath.pptx
+TeamCode/javadocs/
