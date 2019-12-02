@@ -3,8 +3,9 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.firstinspires.ftc.teamcode.autonomous.Arm;
+import org.firstinspires.ftc.teamcode.autonomous.Drive;
 import org.firstinspires.ftc.teamcode.autonomous.Robot;
-
 
 @Autonomous(name = "A1_BlueDepotAutoDrive", group = "Auto")
 //@Disabled
@@ -14,28 +15,28 @@ public class BlueDepotAutoDrive extends LinearOpMode {
     private final double DEFAULT_DRIVE_POWER        =  0.4;
     private final double DEFAULT_ROTATE_POWER       =  0.3;
 
-    Robot cBot;
+
+    Drive drive;
+    Arm arm;
+
+    Robot cBot = new Robot();
 
     @Override
     public void runOpMode() {
 
-        // Init
-        cBot = Robot.getInstance(this);
+        // Initialize Hardware Map - Do this before calling any other method
+        cBot.init(hardwareMap);
 
-        // Wait for player to hit START
+        drive = new Drive(cBot, telemetry, this);
+        arm = new Arm(cBot, telemetry, this);
+
+        //telemetry.setAutoClear(false);
         waitForStart();
 
-        // Run code during Autonomous mode
-        while (opModeIsActive()) {
+        arm.rotate(-400, 0.4);
+        //sleep(50);
+        //arm.rotate(600, 0.2);
 
-            deliverFirstStone();
-            deliverSecondStone();
-            parkUnderBridge();
-        }
-
-        // Code to run for STOP
-        cBot.drive.stop();
-        cBot.arm.stop();
 
     }
 
@@ -51,15 +52,15 @@ public class BlueDepotAutoDrive extends LinearOpMode {
      *  5. Turn further left to be almost parallel to the right wall
      *  6. Drive forward and deliver the first stone
      **/
-    private void deliverFirstStone() {
+    private void deliverFirstStone(){
 
         // Capture/Deliver stone 1
-        cBot.drive.backward(2, DEFAULT_DRIVE_POWER, DEFAULT_DRIVE_TIMEOUT_SECS);
-        cBot.drive.backward(38, DEFAULT_DRIVE_POWER, DEFAULT_DRIVE_TIMEOUT_SECS);
-        cBot.drive.rotateLeft(20, DEFAULT_ROTATE_POWER);
-        cBot.drive.forward(30, DEFAULT_DRIVE_POWER, DEFAULT_DRIVE_TIMEOUT_SECS);
-        cBot.drive.rotateLeft(45, DEFAULT_ROTATE_POWER);
-        cBot.drive.forward(22, DEFAULT_DRIVE_POWER, DEFAULT_DRIVE_TIMEOUT_SECS);
+        drive.backward(2, DEFAULT_DRIVE_POWER, DEFAULT_DRIVE_TIMEOUT_SECS);
+        drive.backward(38, DEFAULT_DRIVE_POWER, DEFAULT_DRIVE_TIMEOUT_SECS);
+        drive.rotateLeft(18, DEFAULT_ROTATE_POWER);
+        drive.forward(30, DEFAULT_DRIVE_POWER, DEFAULT_DRIVE_TIMEOUT_SECS);
+        drive.rotateLeft(45, DEFAULT_ROTATE_POWER);
+        drive.forward(22, DEFAULT_DRIVE_POWER, DEFAULT_DRIVE_TIMEOUT_SECS);
 
     }
 
@@ -74,11 +75,11 @@ public class BlueDepotAutoDrive extends LinearOpMode {
 
     private void deliverSecondStone() {
 
-        cBot.drive.backward(65, DEFAULT_DRIVE_POWER, DEFAULT_DRIVE_TIMEOUT_SECS);
-        cBot.drive.rotateLeft(54, DEFAULT_ROTATE_POWER);
-        cBot.drive.forward(7, DEFAULT_DRIVE_POWER, DEFAULT_DRIVE_TIMEOUT_SECS);
-        cBot.drive.rotateRight(60, DEFAULT_ROTATE_POWER);
-        cBot.drive.forward(47, DEFAULT_DRIVE_POWER, DEFAULT_DRIVE_TIMEOUT_SECS);
+        drive.backward(65, DEFAULT_DRIVE_POWER, DEFAULT_DRIVE_TIMEOUT_SECS);
+        drive.rotateLeft(54, DEFAULT_ROTATE_POWER);
+        drive.forward(7, DEFAULT_DRIVE_POWER, DEFAULT_DRIVE_TIMEOUT_SECS);
+        drive.rotateRight(60, DEFAULT_ROTATE_POWER);
+        drive.forward(47, DEFAULT_DRIVE_POWER, DEFAULT_DRIVE_TIMEOUT_SECS);
 
     }
 
@@ -88,8 +89,8 @@ public class BlueDepotAutoDrive extends LinearOpMode {
      */
     private void parkUnderBridge() {
 
-        cBot.drive.backward(10, DEFAULT_DRIVE_POWER, DEFAULT_DRIVE_TIMEOUT_SECS);
-        cBot.drive.rotateRight(3, DEFAULT_ROTATE_POWER);
+        drive.backward(10, DEFAULT_DRIVE_POWER, DEFAULT_DRIVE_TIMEOUT_SECS);
+        drive.rotateRight(3, DEFAULT_ROTATE_POWER);
     }
 
 }

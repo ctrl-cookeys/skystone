@@ -1,9 +1,9 @@
-package org.firstinspires.ftc.teamcode.autonomous;
+package org.firstinspires.ftc.teamcode.autonomous_old;
 
+import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -12,29 +12,35 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.teamcode.Constants;
 
+@Deprecated
 public class Drive {
 
     private LinearOpMode linearOpMode;
     private Telemetry telemetry;
-    private Robot cBot;
 
+    private  DcMotor leftDrive;
+    private  DcMotor rightDrive;
+
+    private BNO055IMU imu;
     private double globalAngle;
 
     private Orientation lastAngles = new Orientation();
 
-
-    private final ElapsedTime driveRuntime = new ElapsedTime();
+    private ElapsedTime driveRuntime = new ElapsedTime();
 
     /*
      * Constructor
      */
-    public Drive(Robot cBot, Telemetry telemetry, LinearOpMode linearOpMode) {
+    public Drive(LinearOpMode linearOpMode) {
 
-        this.cBot = cBot;
         this.linearOpMode = linearOpMode;
         this.telemetry = this.linearOpMode.telemetry;
 
-        calibrateGyro();
+        this.leftDrive = this.linearOpMode.hardwareMap.dcMotor.get("left_drive");
+        this.rightDrive = this.linearOpMode.hardwareMap.dcMotor.get("right_drive");
+
+        initIMU();
+        resetDrive();
 
     }
 
@@ -110,7 +116,6 @@ public class Drive {
 
     }
 
-
     /**
      * Turn Left using IMU
      */
@@ -127,7 +132,6 @@ public class Drive {
         rotate(-degrees, power);
     }
 
-
     /**
      * Drive using Encoders
      **/
@@ -139,33 +143,32 @@ public class Drive {
         int newRightTarget;
 
         // Range Clip (Don't think this is actually needed)
-        power = Range.clip(power, 0, 1);
+        //power = Range.clip(power, 0, 1);
 
         // Ensure that the OpMode is still active
         if (linearOpMode.opModeIsActive()) {
 
             // Determine new target position, and pass to motor controller
-            newLeftTarget = cBot.leftDrive.getCurrentPosition() + (int) (leftInches * Constants.Drive.COUNTS_PER_INCH);
-            newRightTarget = cBot.rightDrive.getCurrentPosition() + (int) (rightInches * Constants.Drive.COUNTS_PER_INCH);
+            newLeftTarget = this.leftDrive.getCurrentPosition() + (int) (leftInches * Constants.Drive.COUNTS_PER_INCH);
+            newRightTarget = this.rightDrive.getCurrentPosition() + (int) (rightInches * Constants.Drive.COUNTS_PER_INCH);
 
             // Use gyro to drive in a straight line.
             // This is from : https://stemrobotics.cs.pdx.edu/node/7266
-            //double correction = 0;
             double correction = checkDirection();
             telemetry.addData("IMU Correction:", "%.2f", correction);
 
             // Set Target Position with correction reported by IMU
-            cBot.leftDrive.setTargetPosition(newLeftTarget - (int) correction);
-            cBot.rightDrive.setTargetPosition(newRightTarget + (int) correction);
+            this.leftDrive.setTargetPosition(newLeftTarget - (int) correction);
+            this.rightDrive.setTargetPosition(newRightTarget + (int) correction);
 
             // Turn On RUN_TO_POSITION
-            cBot.leftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            cBot.rightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            this.leftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            this.rightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             // Reset the timeout time and start motion.
             driveRuntime.reset();
-            cBot.leftDrive.setPower(Math.abs(power));
-            cBot.rightDrive.setPower(Math.abs(power));
+            this.leftDrive.setPower(Math.abs(power));
+            this.rightDrive.setPower(Math.abs(power));
 
             // keep looping while we are still active, and there is time left, and both motors are running.
             // Note: We use (isBusy() && isBusy()) in the loop test, which means that when EITHER motor hits
@@ -175,35 +178,55 @@ public class Drive {
             // onto the next step, use (isBusy() || isBusy()) in the loop test.
             while (linearOpMode.opModeIsActive() &&
                     (driveRuntime.seconds() < timeoutSeconds) &&
-                    (cBot.leftDrive.isBusy() && cBot.rightDrive.isBusy())) {
+                    (this.leftDrive.isBusy() && this.rightDrive.isBusy())) {
 
                 // Display it for the driver.
                 telemetry.addData("Path1", "Running to %7d :%7d", newLeftTarget, newRightTarget);
                 telemetry.addData("Path2", "Running at %7d :%7d",
-                        cBot.leftDrive.getCurrentPosition(),
-                        cBot.rightDrive.getCurrentPosition());
+                        this.leftDrive.getCurrentPosition(),
+                        this.rightDrive.getCurrentPosition());
                 telemetry.update();
             }
 
             // Turn off RUN_TO_POSITION
-            cBot.leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            cBot.rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            this.leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            this.rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
             // Stop all motion;
-            cBot.leftDrive.setPower(0);
-            cBot.rightDrive.setPower(0);
+            this.leftDrive.setPower(0);
+            this.rightDrive.setPower(0);
 
 
             // optional pause after each move
-            linearOpMode.sleep(50);
+            this.linearOpMode.sleep(50);
         }
+    }
+
+    private void initIMU() {
+
+        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+
+        parameters.mode = BNO055IMU.SensorMode.IMU;
+        parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
+        parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        parameters.loggingEnabled = false;
+
+        imu = this.linearOpMode.hardwareMap.get(BNO055IMU.class, "imu");
+        imu.initialize(parameters);
+
+        // make sure the imu gyro is calibrated before continuing.
+        while (!this.linearOpMode.isStopRequested() && !imu.isGyroCalibrated()) {
+            this.linearOpMode.sleep(50);
+            this.linearOpMode.idle();
+        }
+
     }
 
     /**
      * Resets the cumulative angle tracking to zero.
      */
     private void resetAngle() {
-        lastAngles = cBot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        lastAngles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
         globalAngle = 0;
     }
 
@@ -218,7 +241,7 @@ public class Drive {
         // returned as 0 to +180 or 0 to -180 rolling back to -179 or +179 when rotation passes
         // 180 degrees. We detect this transition and track the total cumulative angle of rotation.
 
-        Orientation angles = cBot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        Orientation angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 
         double deltaAngle = angles.firstAngle - lastAngles.firstAngle;
 
@@ -281,24 +304,24 @@ public class Drive {
         } else return;
 
         // set power to rotate.
-        cBot.leftDrive.setPower(leftPower);
-        cBot.rightDrive.setPower(rightPower);
+        this.leftDrive.setPower(leftPower);
+        this.rightDrive.setPower(rightPower);
 
         // rotate until turn is completed.
         if (degrees < 0) {
             // On right turn we have to get off zero first.
-            while (linearOpMode.opModeIsActive() && getAngle() == 0) {
+            while (this.linearOpMode.opModeIsActive() && getAngle() == 0) {
             }
 
-            while (linearOpMode.opModeIsActive() && getAngle() > degrees) {
+            while (this.linearOpMode.opModeIsActive() && getAngle() > degrees) {
             }
         } else    // left turn.
-            while (linearOpMode.opModeIsActive() && getAngle() < degrees) {
+            while (this.linearOpMode.opModeIsActive() && getAngle() < degrees) {
             }
 
         // turn the motors off.
-        cBot.rightDrive.setPower(0);
-        cBot.leftDrive.setPower(0);
+        this.rightDrive.setPower(0);
+        this.leftDrive.setPower(0);
 
         // wait for rotation to stop.
         this.linearOpMode.sleep(100);
@@ -310,35 +333,26 @@ public class Drive {
 
     public void stop() {
 
-        cBot.leftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        cBot.rightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        this.leftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        this.rightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        cBot.leftDrive.setPower(0);
-        cBot.rightDrive.setPower(0);
+        this.leftDrive.setPower(0);
+        this.rightDrive.setPower(0);
     }
 
     private void resetDrive() {
 
-        cBot.leftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        cBot.rightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        this.leftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        this.rightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        cBot.leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        cBot.rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        this.leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        this.rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        cBot.leftDrive.setDirection(DcMotor.Direction.FORWARD);
-        cBot.rightDrive.setDirection(DcMotor.Direction.REVERSE);
+        this.leftDrive.setDirection(DcMotor.Direction.FORWARD);
+        this.rightDrive.setDirection(DcMotor.Direction.REVERSE);
 
     }
 
-    private void calibrateGyro() {
-
-        // make sure the imu gyro is calibrated before continuing.
-        while (!linearOpMode.isStopRequested() && !cBot.imu.isGyroCalibrated())
-        {
-            this.linearOpMode.sleep(50);
-            linearOpMode.idle();
-        }
-    }
 
     public enum Direction {
 

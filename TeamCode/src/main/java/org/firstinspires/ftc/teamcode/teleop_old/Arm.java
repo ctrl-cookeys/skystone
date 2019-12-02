@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.teleop;
+package org.firstinspires.ftc.teamcode.teleop_old;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -8,6 +8,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 import static org.firstinspires.ftc.teamcode.Constants.Arm.ARM_RAMP_DOWN_ENCODER_TARGET_THRESHOLD;
 
+@Deprecated
 public class Arm {
 
     private final OpMode opMode;

@@ -1,11 +1,9 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.teamcode.teleop.Robot;
+import org.firstinspires.ftc.teamcode.teleop_old.Robot;
 
 @TeleOp(name = "T1_TeleDrive", group = "CBot")
 //@Disabled
@@ -70,7 +68,7 @@ public class TeleOpDrive extends OpMode {
 
         if (gamepad2.a) {
             this.cBot.arm.bringForward(0.9);
-        } else if (gamepad2.b) {
+        } else if (gamepad2.y) {
             this.cBot.arm.bringBackward(0.9);
         }
     }

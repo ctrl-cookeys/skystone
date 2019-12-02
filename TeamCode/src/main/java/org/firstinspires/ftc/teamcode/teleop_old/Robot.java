@@ -1,8 +1,8 @@
-package org.firstinspires.ftc.teamcode.teleop;
+package org.firstinspires.ftc.teamcode.teleop_old;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
-
+@Deprecated
 public class Robot {
 
     // Singleton Instance

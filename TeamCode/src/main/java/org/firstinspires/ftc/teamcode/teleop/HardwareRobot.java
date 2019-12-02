@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.autonomous;
+package org.firstinspires.ftc.teamcode.teleop;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -35,7 +35,6 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
  */
 
 
-
 /**
  * This is NOT an opmode.
  *
@@ -52,20 +51,20 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
  * Servo channel:  Servo to open left claw:  "left_hand"
  * Servo channel:  Servo to open right claw: "right_hand"
  */
-public class Robot
+public class HardwareRobot
 {
     /* Public OpMode members. */
-    protected DcMotor leftDrive   = null;
-    protected DcMotor rightDrive  = null;
-    protected DcMotor armRotator = null;
+    public DcMotor leftDrive   = null;
+    public DcMotor rightDrive  = null;
+    public DcMotor armRotator = null;
 
-    protected BNO055IMU imu;
+    public BNO055IMU imu;
 
     /* local OpMode members. */
     HardwareMap hwMap =  null;
 
     /* Constructor */
-    public Robot(){
+    public HardwareRobot(){
 
     }
 
