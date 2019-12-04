@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.autonomous.Arm;
 import org.firstinspires.ftc.teamcode.autonomous.Drive;
+import org.firstinspires.ftc.teamcode.autonomous.Claw;
+
 import org.firstinspires.ftc.teamcode.autonomous.Robot;
 
 @Autonomous(name = "A1_BlueDepotAutoDrive", group = "Auto")
@@ -18,8 +20,10 @@ public class BlueDepotAutoDrive extends LinearOpMode {
 
     Drive drive;
     Arm arm;
+    Claw claw;
 
-    Robot cBot = new Robot();
+
+    private Robot cBot = new Robot();
 
     @Override
     public void runOpMode() {
@@ -29,15 +33,19 @@ public class BlueDepotAutoDrive extends LinearOpMode {
 
         drive = new Drive(cBot, telemetry, this);
         arm = new Arm(cBot, telemetry, this);
+        claw = new Claw(cBot, telemetry, this);
 
         //telemetry.setAutoClear(false);
         waitForStart();
 
-        arm.rotate(-400, 0.4);
+        //arm.rotate(-3000, 0.4);
         //sleep(50);
+
         //arm.rotate(600, 0.2);
 
-
+        //arm.rotateForward(3500, 0.4);
+        //sleep(50);
+        //arm.rotateBackward(200, 0.2);
     }
 
     /** Deliver 1st Stone Count

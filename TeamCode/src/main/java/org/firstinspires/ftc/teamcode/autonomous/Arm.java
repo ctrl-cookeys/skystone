@@ -44,10 +44,6 @@ public class Arm {
         rotateByEncoderAndHold(target, power);
     }
 
-    private void stop() {
-
-        cBot.armRotator.setPower(0);
-    }
 
     private void rotateByEncoderAndHold(int target, double power) {
 
@@ -77,12 +73,16 @@ public class Arm {
 
         }
 
-
-        // cBot.armRotator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        // cBot.armRotator.setPower(0);
-
+         cBot.armRotator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+         cBot.armRotator.setPower(0);
 
     }
+
+    private void stop() {
+
+        cBot.armRotator.setPower(0);
+    }
+
 
 
 }

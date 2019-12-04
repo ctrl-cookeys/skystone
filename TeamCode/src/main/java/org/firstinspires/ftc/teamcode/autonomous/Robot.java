@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.autonomous;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 
 
 /* Copyright (c) 2017 FIRST. All rights reserved.
@@ -34,23 +35,19 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-
-
 /**
  * This is NOT an opmode.
  *
  * This class can be used to define all the specific hardware for a single robot.
- * In this case that robot is a Pushbot.
- * See PushbotTeleopTank_Iterative and others classes starting with "Pushbot" for usage examples.
+ * In this case that robot is a Robot.
  *
  * This hardware class assumes the following device names have been configured on the robot:
  * Note:  All names are lower case and some have single spaces between words.
  *
  * Motor channel:  Left  drive motor:        "left_drive"
  * Motor channel:  Right drive motor:        "right_drive"
- * Motor channel:  Manipulator drive motor:  "left_arm"
- * Servo channel:  Servo to open left claw:  "left_hand"
- * Servo channel:  Servo to open right claw: "right_hand"
+ * Motor channel:  Arm Rotator:              "arm_rotator"
+ * Servo channel:  Servo to open/close claw: "claw"
  */
 public class Robot
 {
@@ -58,6 +55,8 @@ public class Robot
     protected DcMotor leftDrive   = null;
     protected DcMotor rightDrive  = null;
     protected DcMotor armRotator = null;
+    protected Servo claw = null;
+
 
     protected BNO055IMU imu;
 
@@ -78,6 +77,7 @@ public class Robot
         leftDrive  = hwMap.get(DcMotor.class, "left_drive");
         rightDrive = hwMap.get(DcMotor.class, "right_drive");
         armRotator = hwMap.get(DcMotor.class, "arm_rotator");
+        claw       = hwMap.get(Servo.class, "claw");
 
         // IMU
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();

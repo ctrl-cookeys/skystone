@@ -3,13 +3,20 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.teleop_old.Robot;
+import org.firstinspires.ftc.teamcode.teleop.Arm;
+import org.firstinspires.ftc.teamcode.teleop.Robot;
+import org.firstinspires.ftc.teamcode.teleop.Drive;
+
 
 @TeleOp(name = "T1_TeleDrive", group = "CBot")
 //@Disabled
 public class TeleOpDrive extends OpMode {
 
-    Robot cBot = null;
+
+    private Drive drive;
+    private Arm arm;
+
+    private Robot cBot = new Robot();
 
     double leftPower;
     double rightPower;
@@ -20,7 +27,10 @@ public class TeleOpDrive extends OpMode {
     @Override
     public void init() {
 
-        cBot = Robot.getInstance(this);
+        cBot.init(hardwareMap);
+
+        drive = new org.firstinspires.ftc.teamcode.teleop.Drive(cBot, telemetry, this);
+        arm = new org.firstinspires.ftc.teamcode.teleop.Arm(cBot, telemetry, this);
 
     }
 
@@ -54,22 +64,22 @@ public class TeleOpDrive extends OpMode {
     @Override
     public void stop() {
 
-        cBot.teleop.stop();
+        drive.stop();
 
     }
 
     public void driveAround() {
 
-        cBot.teleop.tankDrive();
+        drive.tankDrive();
 
     }
 
     private void operateArm() {
 
         if (gamepad2.a) {
-            this.cBot.arm.bringForward(0.9);
+            arm.bringForward(0.9);
         } else if (gamepad2.y) {
-            this.cBot.arm.bringBackward(0.9);
+            arm.bringBackward(0.9);
         }
     }
 }
