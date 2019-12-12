@@ -4,6 +4,8 @@ import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 
 
 /* Copyright (c) 2017 FIRST. All rights reserved.
@@ -54,9 +56,15 @@ public class Robot
     /* Public OpMode members. */
     protected DcMotor leftDrive   = null;
     protected DcMotor rightDrive  = null;
-    protected DcMotor armRotator = null;
-    protected Servo claw = null;
+    protected DcMotor armRotator  = null;
+    protected Servo   leftLift    = null;
+    protected Servo   rightLift   = null;
 
+    protected ColorSensor leftColorSensor;
+    protected ColorSensor rightColorSensor;
+
+    protected DistanceSensor leftDistanceSensor;
+    protected DistanceSensor rightDistanceSensor;
 
     protected BNO055IMU imu;
 
@@ -74,10 +82,18 @@ public class Robot
         hwMap = ahwMap;
 
         // Define and Initialize Motors
-        leftDrive  = hwMap.get(DcMotor.class, "left_drive");
-        rightDrive = hwMap.get(DcMotor.class, "right_drive");
-        armRotator = hwMap.get(DcMotor.class, "arm_rotator");
-        claw       = hwMap.get(Servo.class, "claw");
+        leftDrive    = hwMap.get(DcMotor.class, "left_drive");
+        rightDrive   = hwMap.get(DcMotor.class, "right_drive");
+        armRotator   = hwMap.get(DcMotor.class, "arm_rotator");
+        leftLift     = hwMap.get(Servo.class, "left_lift");
+        rightLift    = hwMap.get(Servo.class, "right_lift");
+
+
+        leftColorSensor = hwMap.get(ColorSensor.class, "left_color_distance_sensor");
+        rightColorSensor = hwMap.get(ColorSensor.class, "right_color_distance_sensor");
+
+        leftDistanceSensor = hwMap.get(DistanceSensor.class, "left_color_distance_sensor");
+        rightDistanceSensor = hwMap.get(DistanceSensor.class, "right_color_distance_sensor");
 
         // IMU
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();

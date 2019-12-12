@@ -5,7 +5,10 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.autonomous.Arm;
 import org.firstinspires.ftc.teamcode.autonomous.Drive;
-import org.firstinspires.ftc.teamcode.autonomous.Claw;
+import org.firstinspires.ftc.teamcode.autonomous.Lift;
+import org.firstinspires.ftc.teamcode.autonomous.SkyStone;
+
+
 
 import org.firstinspires.ftc.teamcode.autonomous.Robot;
 
@@ -20,7 +23,9 @@ public class BlueDepotAutoDrive extends LinearOpMode {
 
     Drive drive;
     Arm arm;
-    Claw claw;
+    Lift lift;
+    //Stone stone;
+    SkyStone skyStone;
 
 
     private Robot cBot = new Robot();
@@ -33,19 +38,31 @@ public class BlueDepotAutoDrive extends LinearOpMode {
 
         drive = new Drive(cBot, telemetry, this);
         arm = new Arm(cBot, telemetry, this);
-        claw = new Claw(cBot, telemetry, this);
+        lift = new Lift(cBot, telemetry, this);
+        skyStone = new SkyStone(cBot, telemetry, this);
+
+        //stone = new Stone(cBot, telemetry, this);
 
         //telemetry.setAutoClear(false);
         waitForStart();
 
-        //arm.rotate(-3000, 0.4);
-        //sleep(50);
+    }
 
-        //arm.rotate(600, 0.2);
+    private void getFirstSkystone() {
+        drive.forward(2, DEFAULT_DRIVE_POWER, DEFAULT_DRIVE_TIMEOUT_SECS);
+        drive.forward(30, DEFAULT_DRIVE_POWER, DEFAULT_DRIVE_TIMEOUT_SECS);
 
-        //arm.rotateForward(3500, 0.4);
-        //sleep(50);
-        //arm.rotateBackward(200, 0.2);
+        skyStone.getSkystonePattern();
+        if (skyStone.isPatternA()) {
+
+        } else if (skyStone.isPatternB()) {
+
+        } else if (skyStone.isPatternC()) {
+
+        } else {
+            // Well what to do now??
+        }
+
     }
 
     /** Deliver 1st Stone Count
@@ -100,5 +117,6 @@ public class BlueDepotAutoDrive extends LinearOpMode {
         drive.backward(10, DEFAULT_DRIVE_POWER, DEFAULT_DRIVE_TIMEOUT_SECS);
         drive.rotateRight(3, DEFAULT_ROTATE_POWER);
     }
+
 
 }
