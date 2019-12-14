@@ -1,9 +1,12 @@
 package org.firstinspires.ftc.teamcode.teleop;
-
 import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 
 
 /* Copyright (c) 2017 FIRST. All rights reserved.
@@ -44,19 +47,34 @@ import com.qualcomm.robotcore.hardware.Servo;
  * This hardware class assumes the following device names have been configured on the robot:
  * Note:  All names are lower case and some have single spaces between words.
  *
- * Motor channel:  Left  drive motor:        "left_drive"
- * Motor channel:  Right drive motor:        "right_drive"
- * Motor channel:  Arm Rotator:              "arm_rotator"
- * Servo channel:  Servo to open/close claw: "claw"
+ * 1. DcMotor          :  Left  drive motor      : "left_drive"
+ * 2. DcMotor          :  Right drive motor      : "right_drive"
+ * 3. DcMotor          :  Left  intake motor     : "left_intake"
+ * 4. DcMotor          :  Right intake motor     : "right_intake"
+ * 5. CR Servo         :  Left hopper servo      : "left_Servo"
+ * 6. CR Servo         :  Right hopper servo     : "right_Servo"
+ * 7. Servo            :  Servo to flip stones   : "flipper"
+ * 8. ColorSensor      :  Left Color Sensor      : "left_color"
+ * 9. ColorSensor      :  Right Color Sensor     : "right_color"
  */
+
+
 public class Robot
 {
-    /* Public OpMode members. */
     protected DcMotor leftDrive   = null;
     protected DcMotor rightDrive  = null;
-    protected DcMotor armRotator = null;
-    protected Servo claw = null;
 
+    protected DcMotor leftIntake   = null;
+    protected DcMotor rightIntake = null;
+
+
+    protected CRServo leftHopperArm = null;
+    protected CRServo rightHopperArm = null;
+
+    protected ColorSensor leftColorSensor = null;
+    protected ColorSensor rightColorSensor = null;
+
+    protected Servo flipper = null;
 
     protected BNO055IMU imu;
 
@@ -73,11 +91,93 @@ public class Robot
         // Save reference to Hardware map
         hwMap = ahwMap;
 
-        // Define and Initialize Motors
-        leftDrive  = hwMap.get(DcMotor.class, "left_drive");
-        rightDrive = hwMap.get(DcMotor.class, "right_drive");
-        armRotator = hwMap.get(DcMotor.class, "arm_rotator");
-        claw       = hwMap.get(Servo.class, "claw");
+        initDriveMotors();
+        initIntakeMotors();
+        initHopperCRServos();
+        //initColorSensors();
+        initFlipper();
+        initImu();
+
+    }
+
+    /**
+     *  Define and Initialize Drive Motors
+     */
+    private void initDriveMotors() {
+
+
+        leftDrive    = hwMap.get(DcMotor.class, "left_drive");
+        rightDrive   = hwMap.get(DcMotor.class, "right_drive");
+
+        leftDrive.setDirection(DcMotor.Direction.REVERSE);
+        rightDrive.setDirection(DcMotor.Direction.FORWARD);
+
+        // Set motors to apply brakes whenever power is set to 0
+        leftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        leftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        // Set all motors to zero power
+        leftDrive.setPower(0);
+        rightDrive.setPower(0);
+
+    }
+
+    /**
+     *  Define and Initialize Intake Motors
+     */
+    private void initIntakeMotors() {
+
+        leftIntake    = hwMap.get(DcMotor.class, "left_intake");
+        rightIntake   = hwMap.get(DcMotor.class, "right_intake");
+
+        leftIntake.setDirection(CRServo.Direction.REVERSE);
+        rightIntake.setDirection(CRServo.Direction.FORWARD);
+
+        // Set all motors to zero power
+        leftIntake.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightIntake.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        leftIntake.setPower(0);
+        rightIntake.setPower(0);
+
+    }
+
+    /**
+     *  Define and Initialize Hopper Servos
+     */
+    private void initHopperCRServos() {
+
+        leftHopperArm =   hwMap.crservo.get("left_Servo");
+        rightHopperArm =  hwMap.crservo.get("right_Servo");
+
+        leftHopperArm.setDirection(CRServo.Direction.FORWARD);
+        rightHopperArm.setDirection(CRServo.Direction.REVERSE);
+
+    }
+
+    /**
+     *  Define and Initialize Color Sensors
+     */
+    private void initColorSensors(){
+
+        leftColorSensor = hwMap.get(ColorSensor.class, "left_color");
+        rightColorSensor = hwMap.get(ColorSensor.class, "right_color");
+    }
+
+    private void initFlipper() {
+
+        flipper = hwMap.get(Servo.class, "flipper");
+
+        // To be initialized with other parameters
+
+    }
+
+    /**
+     *  Define and Initialize IMU
+     */
+    private void initImu(){
 
         // IMU
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
@@ -89,25 +189,6 @@ public class Robot
 
         imu = hwMap.get(BNO055IMU.class, "imu");
         imu.initialize(parameters);
-
-        leftDrive.setDirection(DcMotor.Direction.FORWARD);
-        rightDrive.setDirection(DcMotor.Direction.REVERSE);
-
-        // Set motors to apply brakes whenever power is set to 0
-        leftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-        leftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        armRotator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        //armRotator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-        // Set all motors to zero power
-        leftDrive.setPower(0);
-        rightDrive.setPower(0);
-        armRotator.setPower(0);
-
     }
 
 }

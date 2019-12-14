@@ -3,30 +3,20 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.autonomous.Arm;
-import org.firstinspires.ftc.teamcode.autonomous.Drive;
-import org.firstinspires.ftc.teamcode.autonomous.Lift;
-import org.firstinspires.ftc.teamcode.autonomous.SkyStone;
-
-
-
+import org.firstinspires.ftc.teamcode.autonomous.DirectDrive;
+import org.firstinspires.ftc.teamcode.autonomous.Stone;
 import org.firstinspires.ftc.teamcode.autonomous.Robot;
 
 @Autonomous(name = "A1_BlueDepotAutoDrive", group = "Auto")
 //@Disabled
 public class BlueDepotAutoDrive extends LinearOpMode {
 
-    private final double DEFAULT_DRIVE_TIMEOUT_SECS = 10.0;
+    private final double DEFAULT_DRIVE_TIMEOUT_SECS = 20.0;
     private final double DEFAULT_DRIVE_POWER        =  0.4;
     private final double DEFAULT_ROTATE_POWER       =  0.3;
 
-
-    Drive drive;
-    Arm arm;
-    Lift lift;
-    //Stone stone;
-    SkyStone skyStone;
-
+    DirectDrive drive;
+    Stone stone;
 
     private Robot cBot = new Robot();
 
@@ -36,14 +26,9 @@ public class BlueDepotAutoDrive extends LinearOpMode {
         // Initialize Hardware Map - Do this before calling any other method
         cBot.init(hardwareMap);
 
-        drive = new Drive(cBot, telemetry, this);
-        arm = new Arm(cBot, telemetry, this);
-        lift = new Lift(cBot, telemetry, this);
-        skyStone = new SkyStone(cBot, telemetry, this);
+        drive = new DirectDrive(cBot, telemetry, this);
+        stone = new Stone(cBot, telemetry, this);
 
-        //stone = new Stone(cBot, telemetry, this);
-
-        //telemetry.setAutoClear(false);
         waitForStart();
 
     }
@@ -52,12 +37,12 @@ public class BlueDepotAutoDrive extends LinearOpMode {
         drive.forward(2, DEFAULT_DRIVE_POWER, DEFAULT_DRIVE_TIMEOUT_SECS);
         drive.forward(30, DEFAULT_DRIVE_POWER, DEFAULT_DRIVE_TIMEOUT_SECS);
 
-        skyStone.getSkystonePattern();
-        if (skyStone.isPatternA()) {
+        stone.getSkystonePattern();
+        if (stone.isPatternA()) {
 
-        } else if (skyStone.isPatternB()) {
+        } else if (stone.isPatternB()) {
 
-        } else if (skyStone.isPatternC()) {
+        } else if (stone.isPatternC()) {
 
         } else {
             // Well what to do now??
@@ -77,6 +62,7 @@ public class BlueDepotAutoDrive extends LinearOpMode {
      *  5. Turn further left to be almost parallel to the right wall
      *  6. Drive forward and deliver the first stone
      **/
+
     private void deliverFirstStone(){
 
         // Capture/Deliver stone 1

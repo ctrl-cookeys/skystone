@@ -1,10 +1,12 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
-import org.firstinspires.ftc.teamcode.autonomous.Intake;
-import org.firstinspires.ftc.teamcode.autonomous.Robot;
+import org.firstinspires.ftc.teamcode.teleop.Intake;
+import org.firstinspires.ftc.teamcode.teleop.Robot;
 
 
 
@@ -38,65 +40,61 @@ import org.firstinspires.ftc.teamcode.autonomous.Robot;
  */
 
 
-@Autonomous(name="Basic: TestIntakeAuto", group="Iterative Opmode")
+@TeleOp(name="TestIntakeTeleOp_NoRefactor", group="Test")
 //@Disabled
+public class TestIntakeTeleOp extends OpMode     {
 
-public class TestIntakeAuto extends LinearOpMode {
+    private Robot cBot;
+    private Intake intake;
 
-
-    Intake intake;
-
-    private Robot cBot = new Robot();
-
-
+     /*
+     * Code to run ONCE when the driver hits INIT
+     */
     @Override
-    public void runOpMode() {
+    public void init() {
 
         cBot.init(hardwareMap);
+       // Tell the driver that initialization is complete.
+        telemetry.addData("Intake:", "Initialized");
+    }
 
-        intake = new Intake(cBot, telemetry, this);
+    /*
+     * Code to run REPEATEDLY after the driver hits INIT, but before they hit PLAY
+     */
+    @Override
+    public void init_loop() {
+    }
 
-        waitForStart();
+    /*
+     * Code to run ONCE when the driver hits PLAY
+     */
+    @Override
+    public void start() {
 
-        while (opModeIsActive()) {
+    }
 
+    /*
+     * Code to run REPEATEDLY after the driver hits PLAY but before they hit STOP
+     */
+    @Override
+    public void loop() {
+
+        if(gamepad1.a) {
             intake.start();
+        } else if (gamepad1.b) {
+            intake.stop();
         }
 
+        telemetry.addData("Intake Left Power:","%.2f", intake.getLeftIntakePower());
+        telemetry.addData("Intake Right Power:","%.2f", intake.getRightIntakePower());
+
+    }
+
+    /*
+     * Code to run ONCE after the driver hits STOP
+     */
+    @Override
+    public void stop() {
         intake.stop();
     }
 }
-
-/*
-
-@Autonomous(name="Basic: TestIntakeAuto", group="Iterative Opmode")
-//@Disabled
-
-public class TestIntakeAuto extends LinearOpMode {
-
-    // Declare OpMode members.
-    private ElapsedTime runtime = new ElapsedTime();
-    private DcMotor leftIntake, rightIntake;
-
-
-    @Override
-    public void runOpMode() {
-
-        // step (using the FTCRobot Controller app on the phone).
-        leftIntake= hardwareMap.get(DcMotor.class, "left_intake");
-        rightIntake = hardwareMap.get(DcMotor.class, "right_intake");
-
-        leftIntake.setDirection(DcMotor.Direction.FORWARD);
-        rightIntake.setDirection(DcMotor.Direction.REVERSE);
-
-
-        waitForStart();
-
-        while (opModeIsActive()) {
-
-            leftIntake.setPower(1.0);
-            rightIntake.setPower(1.0);
-        }
-
-    }
- */

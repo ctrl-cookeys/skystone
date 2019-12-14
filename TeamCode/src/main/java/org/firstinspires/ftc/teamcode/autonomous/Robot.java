@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.autonomous;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -46,25 +47,34 @@ import com.qualcomm.robotcore.hardware.DistanceSensor;
  * This hardware class assumes the following device names have been configured on the robot:
  * Note:  All names are lower case and some have single spaces between words.
  *
- * Motor channel:  Left  drive motor:        "left_drive"
- * Motor channel:  Right drive motor:        "right_drive"
- * Motor channel:  Arm Rotator:              "arm_rotator"
- * Servo channel:  Servo to open/close claw: "claw"
+ * 1. DcMotor          :  Left  drive motor      : "left_drive"
+ * 2. DcMotor          :  Right drive motor      : "right_drive"
+ * 3. DcMotor          :  Left  intake motor     : "left_intake"
+ * 4. DcMotor          :  Right intake motor     : "right_intake"
+ * 5. CR Servo         :  Left hopper servo      : "left_Servo"
+ * 6. CR Servo         :  Right hopper servo     : "right_Servo"
+ * 7. Servo            :  Servo to flip stones   : "flipper"
+ * 8. ColorSensor      :  Left Color Sensor      : "left_color"
+ * 9. ColorSensor      :  Right Color Sensor     : "right_color"
  */
+
+
 public class Robot
 {
-    /* Public OpMode members. */
     protected DcMotor leftDrive   = null;
     protected DcMotor rightDrive  = null;
-    protected DcMotor armRotator  = null;
-    protected Servo   leftLift    = null;
-    protected Servo   rightLift   = null;
 
-    protected ColorSensor leftColorSensor;
-    protected ColorSensor rightColorSensor;
+    protected DcMotor leftIntake   = null;
+    protected DcMotor rightIntake = null;
 
-    protected DistanceSensor leftDistanceSensor;
-    protected DistanceSensor rightDistanceSensor;
+
+    protected CRServo leftHopperArm = null;
+    protected CRServo rightHopperArm = null;
+
+    protected ColorSensor leftColorSensor = null;
+    protected ColorSensor rightColorSensor = null;
+
+    protected Servo flipper = null;
 
     protected BNO055IMU imu;
 
@@ -81,30 +91,23 @@ public class Robot
         // Save reference to Hardware map
         hwMap = ahwMap;
 
-        // Define and Initialize Motors
+        initDriveMotors();
+        initIntakeMotors();
+        initHopperCRServos();
+        //initColorSensors();
+        initFlipper();
+        initImu();
+
+    }
+
+    /**
+     *  Define and Initialize Drive Motors
+     */
+    private void initDriveMotors() {
+
+
         leftDrive    = hwMap.get(DcMotor.class, "left_drive");
         rightDrive   = hwMap.get(DcMotor.class, "right_drive");
-        armRotator   = hwMap.get(DcMotor.class, "arm_rotator");
-        leftLift     = hwMap.get(Servo.class, "left_lift");
-        rightLift    = hwMap.get(Servo.class, "right_lift");
-
-
-        leftColorSensor = hwMap.get(ColorSensor.class, "left_color_distance_sensor");
-        rightColorSensor = hwMap.get(ColorSensor.class, "right_color_distance_sensor");
-
-        leftDistanceSensor = hwMap.get(DistanceSensor.class, "left_color_distance_sensor");
-        rightDistanceSensor = hwMap.get(DistanceSensor.class, "right_color_distance_sensor");
-
-        // IMU
-        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-
-        parameters.mode = BNO055IMU.SensorMode.IMU;
-        parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
-        parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
-        parameters.loggingEnabled = false;
-
-        imu = hwMap.get(BNO055IMU.class, "imu");
-        imu.initialize(parameters);
 
         leftDrive.setDirection(DcMotor.Direction.FORWARD);
         rightDrive.setDirection(DcMotor.Direction.REVERSE);
@@ -116,14 +119,76 @@ public class Robot
         leftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        armRotator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        //armRotator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
         // Set all motors to zero power
         leftDrive.setPower(0);
         rightDrive.setPower(0);
-        armRotator.setPower(0);
 
+    }
+
+    /**
+     *  Define and Initialize Intake Motors
+     */
+    private void initIntakeMotors() {
+
+        leftIntake    = hwMap.get(DcMotor.class, "left_intake");
+        rightIntake   = hwMap.get(DcMotor.class, "right_intake");
+
+        leftIntake.setDirection(CRServo.Direction.FORWARD);
+        rightIntake.setDirection(CRServo.Direction.REVERSE);
+
+        // Set all motors to zero power
+        leftIntake.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightIntake.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        leftIntake.setPower(0);
+        rightIntake.setPower(0);
+
+    }
+
+    /**
+     *  Define and Initialize Hopper Servos
+     */
+    private void initHopperCRServos() {
+
+        leftHopperArm =   hwMap.crservo.get("left_Servo");
+        rightHopperArm =  hwMap.crservo.get("right_Servo");
+
+        leftHopperArm.setDirection(CRServo.Direction.FORWARD);
+        rightHopperArm.setDirection(CRServo.Direction.REVERSE);
+
+    }
+
+    /**
+     *  Define and Initialize Color Sensors
+     */
+    private void initColorSensors(){
+
+        leftColorSensor = hwMap.get(ColorSensor.class, "left_color");
+        rightColorSensor = hwMap.get(ColorSensor.class, "right_color");
+    }
+
+    private void initFlipper() {
+
+        flipper = hwMap.get(Servo.class, "flipper");
+
+        // To be initialized with other parameters
+
+    }
+
+    /**
+     *  Define and Initialize IMU
+     */
+    private void initImu(){
+
+        // IMU
+        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+
+        parameters.mode = BNO055IMU.SensorMode.IMU;
+        parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
+        parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        parameters.loggingEnabled = false;
+
+        imu = hwMap.get(BNO055IMU.class, "imu");
+        imu.initialize(parameters);
     }
 
 }

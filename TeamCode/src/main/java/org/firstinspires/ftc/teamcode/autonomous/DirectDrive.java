@@ -12,7 +12,13 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.teamcode.Constants;
 
-public class Drive {
+/*
+    After the 14th Dec League, we should have only 1 base class and have chain drive and direct drive as sub-class.
+    Although, we doubt we will go back to the chain drive, this is a GREAT example for kids to learn about
+    inheritance in JAVA.
+ */
+
+public class DirectDrive {
 
     private LinearOpMode linearOpMode;
     private Telemetry telemetry;
@@ -28,7 +34,7 @@ public class Drive {
     /*
      * Constructor
      */
-    public Drive(Robot cBot, Telemetry telemetry, LinearOpMode linearOpMode) {
+    public DirectDrive(Robot cBot, Telemetry telemetry, LinearOpMode linearOpMode) {
 
         this.cBot = cBot;
         this.linearOpMode = linearOpMode;
@@ -145,8 +151,8 @@ public class Drive {
         if (linearOpMode.opModeIsActive()) {
 
             // Determine new target position, and pass to motor controller
-            newLeftTarget = cBot.leftDrive.getCurrentPosition() + (int) (leftInches * Constants.Drive.COUNTS_PER_INCH);
-            newRightTarget = cBot.rightDrive.getCurrentPosition() + (int) (rightInches * Constants.Drive.COUNTS_PER_INCH);
+            newLeftTarget = cBot.leftDrive.getCurrentPosition() + (int) (leftInches * Constants.DirectDrive.COUNTS_PER_INCH);
+            newRightTarget = cBot.rightDrive.getCurrentPosition() + (int) (rightInches * Constants.DirectDrive.COUNTS_PER_INCH);
 
             // Use gyro to drive in a straight line.
             // This is from : https://stemrobotics.cs.pdx.edu/node/7266
