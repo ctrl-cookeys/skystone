@@ -10,8 +10,8 @@ public class Hopper {
     private Robot cBot;
     private LinearOpMode linearOpMode;
 
-    final double MIN_HOPPER_POWER = -0.8;
-    final double MAX_HOPPER_POWER = 0.3;
+    final double MIN_HOPPER_POWER = 0.75;
+    final double MAX_HOPPER_POWER = 0.75;
 
 
     private double servoPower = MIN_HOPPER_POWER; //Initialize the Hopper to the starting position

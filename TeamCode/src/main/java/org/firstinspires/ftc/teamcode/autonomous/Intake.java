@@ -37,6 +37,18 @@ public class Intake {
 
     }
 
+    public void reverse(){
+
+        cBot.leftIntake.setPower(-1);
+        cBot.rightIntake.setPower(-1);
+    }
+
+    public void eject() {
+
+        cBot.leftIntake.setPower(1);
+        cBot.rightIntake.setPower(1);
+    }
+
     public double getRuntime() {
 
         return motorsRuntime.seconds();
@@ -48,5 +60,12 @@ public class Intake {
         return motorsRuntime.seconds();
     }
 
+    public double getLeftIntakePower() {
+        return cBot.leftIntake.getPower();
+    }
+
+    public double getRightIntakePower() {
+        return cBot.leftIntake.getPower();
+    }
 
 }

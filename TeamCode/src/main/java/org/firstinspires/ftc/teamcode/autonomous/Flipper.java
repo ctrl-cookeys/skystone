@@ -11,8 +11,8 @@ public class Flipper {
     private Robot cBot;
     private LinearOpMode linearOpMode;
 
-    final double MIN_FLIPPER_POWER = 0.1;
-    final double MAX_FLIPPER_POWER = 0.5;
+    final double MIN_FLIPPER_POWER = 0;
+    final double MAX_FLIPPER_POWER = 1;
 
 
     private double servoPower = MIN_FLIPPER_POWER; //Initialize the FLIPPER to the starting position
