@@ -109,8 +109,8 @@ public class Robot
         leftDrive    = hwMap.get(DcMotor.class, "left_drive");
         rightDrive   = hwMap.get(DcMotor.class, "right_drive");
 
-        leftDrive.setDirection(DcMotor.Direction.FORWARD);
-        rightDrive.setDirection(DcMotor.Direction.REVERSE);
+        leftDrive.setDirection(DcMotor.Direction.REVERSE);
+        rightDrive.setDirection(DcMotor.Direction.FORWARD);
 
         // Set motors to apply brakes whenever power is set to 0
         leftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -133,8 +133,8 @@ public class Robot
         leftIntake    = hwMap.get(DcMotor.class, "left_intake");
         rightIntake   = hwMap.get(DcMotor.class, "right_intake");
 
-        leftIntake.setDirection(CRServo.Direction.FORWARD);
-        rightIntake.setDirection(CRServo.Direction.REVERSE);
+        leftIntake.setDirection(CRServo.Direction.REVERSE);
+        rightIntake.setDirection(CRServo.Direction.FORWARD);
 
         // Set all motors to zero power
         leftIntake.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
