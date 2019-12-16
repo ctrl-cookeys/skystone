@@ -36,7 +36,7 @@ public class TeleOpDrive extends OpMode {
         cBot.init(hardwareMap);
 
         drive = new Drive(cBot, telemetry, this);
-        //hopper = new org.firstinspires.ftc.teamcode.teleop.Hopper(cBot, telemetry, this);
+        hopper = new org.firstinspires.ftc.teamcode.teleop.Hopper(cBot, telemetry, this);
         intake = new org.firstinspires.ftc.teamcode.teleop.Intake(cBot, telemetry, this);
         flipper = new org.firstinspires.ftc.teamcode.teleop.Flipper(cBot, telemetry, this);
 
@@ -63,7 +63,7 @@ public class TeleOpDrive extends OpMode {
     public void loop() {
 
         driveAround();
-        //operateHopper();
+        operateHopper();
         operateIntake();
         operateFlipper();
 
@@ -76,7 +76,7 @@ public class TeleOpDrive extends OpMode {
     public void stop() {
 
         drive.stop();
-        //hopper.reset();
+        hopper.reset();
 
     }
 

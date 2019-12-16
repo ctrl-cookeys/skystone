@@ -41,7 +41,7 @@ import org.firstinspires.ftc.teamcode.teleop.Robot;
 
 
 @TeleOp(name="TestIntakeTeleOp_NoRefactor", group="Test")
-@Disabled
+//@Disabled
 public class TestIntakeTeleOp extends OpMode     {
 
     private Robot cBot;

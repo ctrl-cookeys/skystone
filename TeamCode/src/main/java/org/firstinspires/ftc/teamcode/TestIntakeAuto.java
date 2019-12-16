@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.autonomous.Intake;
@@ -40,7 +39,7 @@ import org.firstinspires.ftc.teamcode.autonomous.Robot;
 
 
 @Autonomous(name="Basic: TestIntakeAuto", group="Iterative Opmode")
-@Disabled
+//@Disabled
 
 public class TestIntakeAuto extends LinearOpMode {
 

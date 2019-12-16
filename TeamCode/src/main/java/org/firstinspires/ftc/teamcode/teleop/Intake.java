@@ -40,14 +40,14 @@ public class Intake {
 
     public void reverse(){
 
-        cBot.leftIntake.setPower(-0.5);
-        cBot.rightIntake.setPower(-0.5);
+        cBot.leftIntake.setPower(-1);
+        cBot.rightIntake.setPower(-1);
     }
 
     public void eject() {
 
-        cBot.leftIntake.setPower(0.7);
-        cBot.rightIntake.setPower(0.7);
+        cBot.leftIntake.setPower(1);
+        cBot.rightIntake.setPower(1);
     }
 
     public double getRuntime() {

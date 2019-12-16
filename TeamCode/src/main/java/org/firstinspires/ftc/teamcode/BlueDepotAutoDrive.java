@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.autonomous.DirectDrive;
@@ -9,7 +8,7 @@ import org.firstinspires.ftc.teamcode.autonomous.Stone;
 import org.firstinspires.ftc.teamcode.autonomous.Robot;
 
 @Autonomous(name = "A1_BlueDepotAutoDrive", group = "Auto")
-@Disabled
+//@Disabled
 public class BlueDepotAutoDrive extends LinearOpMode {
 
     private final double DEFAULT_DRIVE_TIMEOUT_SECS = 20.0;

@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
@@ -11,7 +10,6 @@ import org.firstinspires.ftc.teamcode.autonomous.Stone;
 import org.firstinspires.ftc.teamcode.autonomous.Robot;
 
 @TeleOp(name = "TestColor", group = "Test")
-@Disabled
 public class TestColor extends OpMode {
 
     private Robot cBot;
