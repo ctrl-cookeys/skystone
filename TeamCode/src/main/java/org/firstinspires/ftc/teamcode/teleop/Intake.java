@@ -7,7 +7,13 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class Intake {
+    /*
 
+     *The intake class is used to either to make blocks go inwards or outwards.
+     *The block moves outwards by the eject command and the block moves inwards with the reverse command
+     *The intake starts with the start command and stops with stop command
+
+     */
     private OpMode opMode;
     private Telemetry telemetry;
     private Robot cBot;
@@ -23,7 +29,7 @@ public class Intake {
     }
 
     public void start() {
-    //0.48 was the original speed
+    //This starts the intake system at a speed of .15
         motorsRuntime.reset();
         cBot.leftIntake.setPower(0.15);
         cBot.rightIntake.setPower(0.15);
@@ -31,7 +37,7 @@ public class Intake {
     }
 
     public void stop() {
-
+    //This stops the intake system  at a speed of 0
         motorsRuntime.reset();
         cBot.leftIntake.setPower(0);
         cBot.rightIntake.setPower(0);
@@ -39,13 +45,13 @@ public class Intake {
     }
 
     public void reverse(){
-
+        //This pushes the block inwards at a speed of .15
         cBot.leftIntake.setPower(-0.15);
         cBot.rightIntake.setPower(-0.15);
     }
 
     public void eject() {
-
+//This pushes the block outwards at a speed of .15
         cBot.leftIntake.setPower(0.15);
         cBot.rightIntake.setPower(0.15);
     }
