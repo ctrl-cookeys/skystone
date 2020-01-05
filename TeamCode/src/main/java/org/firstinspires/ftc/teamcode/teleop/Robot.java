@@ -51,8 +51,6 @@ import com.qualcomm.robotcore.hardware.DistanceSensor;
  * 2. DcMotor          :  Right drive motor      : "right_drive"
  * 3. DcMotor          :  Left  intake motor     : "left_intake"
  * 4. DcMotor          :  Right intake motor     : "right_intake"
- * 5. CR Servo         :  Left hopper servo      : "left_Servo"
- * 6. CR Servo         :  Right hopper servo     : "right_Servo"
  * 7. Servo            :  Servo to flip stones   : "flipper"
  * 8. ColorSensor      :  Left Color Sensor      : "left_color"
  * 9. ColorSensor      :  Right Color Sensor     : "right_color"
@@ -68,8 +66,6 @@ public class Robot
     protected DcMotor rightIntake = null;
 
 
-    protected CRServo leftHopperArm = null;
-    protected CRServo rightHopperArm = null;
 
     protected ColorSensor leftColorSensor = null;
     protected ColorSensor rightColorSensor = null;
@@ -93,7 +89,6 @@ public class Robot
 
         initDriveMotors();
         initIntakeMotors();
-        initHopperCRServos();
         //initColorSensors();
         initFlipper();
         initImu();
@@ -133,8 +128,8 @@ public class Robot
         leftIntake    = hwMap.get(DcMotor.class, "left_intake");
         rightIntake   = hwMap.get(DcMotor.class, "right_intake");
 
-        leftIntake.setDirection(CRServo.Direction.REVERSE);
-        rightIntake.setDirection(CRServo.Direction.FORWARD);
+        leftIntake.setDirection(DcMotor.Direction.REVERSE);
+        rightIntake.setDirection(DcMotor.Direction.REVERSE);
 
         // Set all motors to zero power
         leftIntake.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -144,18 +139,6 @@ public class Robot
 
     }
 
-    /**
-     *  Define and Initialize Hopper Servos
-     */
-    private void initHopperCRServos() {
-
-        leftHopperArm =   hwMap.crservo.get("left_Servo");
-        rightHopperArm =  hwMap.crservo.get("right_Servo");
-
-        leftHopperArm.setDirection(CRServo.Direction.FORWARD);
-        rightHopperArm.setDirection(CRServo.Direction.REVERSE);
-
-    }
 
     /**
      *  Define and Initialize Color Sensors

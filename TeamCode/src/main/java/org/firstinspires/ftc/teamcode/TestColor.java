@@ -1,52 +1,44 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.autonomous.DirectDrive;
 import org.firstinspires.ftc.teamcode.autonomous.Stone;
 import org.firstinspires.ftc.teamcode.autonomous.Robot;
 
-@TeleOp(name = "TestColor", group = "Test")
-public class TestColor extends OpMode {
+@Autonomous(name = "TestColor", group = "Test")
+public class TestColor extends LinearOpMode {
 
-    private Robot cBot;
     private Stone stone;
 
-    @Override
-    public void init() {
+    private Robot cBot = new Robot();
 
+    @Override
+    public void runOpMode() {
+        // Initialize Hardware Map - Do this before calling any other method
         cBot.init(hardwareMap);
 
         stone = new Stone(cBot, telemetry, this);
 
+        waitForStart();
+
+        while (opModeIsActive()) {
+
+            stone.isLeftSensorYellow();
+            stone.isRightSensorYellow();
+            //telemetry.addData("Left Color Sensor: Is Yellow?", stone.isLeftSensorYellow());
+            //telemetry.addData("Right Color Sensor: Is Yellow?", stone.isRightSensorYellow());
+            telemetry.update();
+            //sleep(2000);
+        }
     }
 
-    /**
-     * Code to run REPEATEDLY after the driver hits INIT, but before they hit PLAY
-     */
-    @Override
-    public void init_loop() {
-    }
+    private void getFirstSkystone() {
 
-    /*
-     * Code to run ONCE when the driver hits PLAY
-     */
-    @Override
-    public void start() {
-    }
-
-
-    @Override
-    public void loop() {
-
-        telemetry.addData("Left Color Senor: Yellow: ", stone.isLeftSensorYellow());
-        telemetry.addData("Right Color Senor: Yellow: ", stone.isRightSensorYellow());
-
-
-        /*stone.getSkystonePattern();
+        stone.getSkystonePattern();
         if (stone.isPatternA()) {
 
         } else if (stone.isPatternB()) {
@@ -56,15 +48,6 @@ public class TestColor extends OpMode {
         } else {
             // Well what to do now??
         }
-        */
-
-    }
-
-    /**
-     * Code to run ONCE when the driver hits STOP
-     */
-    @Override
-    public void stop() {
 
     }
 }

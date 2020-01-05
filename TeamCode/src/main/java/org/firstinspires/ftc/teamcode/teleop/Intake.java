@@ -25,8 +25,8 @@ public class Intake {
     public void start() {
     //0.48 was the original speed
         motorsRuntime.reset();
-        cBot.leftIntake.setPower(0.4);
-        cBot.rightIntake.setPower(0.4);
+        cBot.leftIntake.setPower(0.15);
+        cBot.rightIntake.setPower(0.15);
 
     }
 
@@ -40,14 +40,14 @@ public class Intake {
 
     public void reverse(){
 
-        cBot.leftIntake.setPower(-1);
-        cBot.rightIntake.setPower(-1);
+        cBot.leftIntake.setPower(-0.15);
+        cBot.rightIntake.setPower(-0.15);
     }
 
     public void eject() {
 
-        cBot.leftIntake.setPower(1);
-        cBot.rightIntake.setPower(1);
+        cBot.leftIntake.setPower(0.15);
+        cBot.rightIntake.setPower(0.15);
     }
 
     public double getRuntime() {

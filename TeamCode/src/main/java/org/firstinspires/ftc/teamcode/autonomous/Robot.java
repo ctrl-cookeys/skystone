@@ -91,12 +91,12 @@ public class Robot
         // Save reference to Hardware map
         hwMap = ahwMap;
 
-        initDriveMotors();
-        initIntakeMotors();
-        initHopperCRServos();
-        //initColorSensors();
-        initFlipper();
-        initImu();
+        //initDriveMotors();
+        //initIntakeMotors();
+        //initHopperCRServos();
+        initColorSensors();
+        //initFlipper();
+        //initImu();
 
     }
 
@@ -164,6 +164,7 @@ public class Robot
 
         leftColorSensor = hwMap.get(ColorSensor.class, "left_color");
         rightColorSensor = hwMap.get(ColorSensor.class, "right_color");
+
     }
 
     private void initFlipper() {
