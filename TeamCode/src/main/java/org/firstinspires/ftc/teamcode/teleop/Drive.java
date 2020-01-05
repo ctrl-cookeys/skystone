@@ -35,8 +35,11 @@ public class Drive {
         double leftPower;
         double rightPower;
 
-        leftPower = Range.clip(-this.gamepad1.left_stick_y, -1, 1);
-        rightPower = Range.clip(-this.gamepad1.right_stick_y, -1, 1);
+       // leftPower = Range.clip(-this.gamepad1.left_stick_y, -1, 1);
+       // rightPower = Range.clip(-this.gamepad1.right_stick_y, -1, 1);
+
+        leftPower = Range.clip(-this.gamepad1.left_stick_y, -0.5, 0.5);
+        rightPower = Range.clip(-this.gamepad1.right_stick_y, -0.5, 0.5);
 
         cBot.leftDrive.setPower(leftPower);
         cBot.rightDrive.setPower(rightPower);

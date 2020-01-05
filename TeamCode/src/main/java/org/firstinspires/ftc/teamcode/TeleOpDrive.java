@@ -7,7 +7,6 @@ import org.firstinspires.ftc.teamcode.teleop.Flipper;
 import org.firstinspires.ftc.teamcode.teleop.Intake;
 import org.firstinspires.ftc.teamcode.teleop.Robot;
 import org.firstinspires.ftc.teamcode.teleop.Drive;
-import org.firstinspires.ftc.teamcode.teleop.Hopper;
 
 
 
@@ -15,9 +14,8 @@ import org.firstinspires.ftc.teamcode.teleop.Hopper;
 //@Disabled
 public class TeleOpDrive extends OpMode {
 
-
+// Define objects in class
     private Drive drive;
-    private Hopper hopper;
     private Intake intake;
     private Flipper flipper;
 
@@ -36,7 +34,6 @@ public class TeleOpDrive extends OpMode {
         cBot.init(hardwareMap);
 
         drive = new Drive(cBot, telemetry, this);
-        hopper = new org.firstinspires.ftc.teamcode.teleop.Hopper(cBot, telemetry, this);
         intake = new org.firstinspires.ftc.teamcode.teleop.Intake(cBot, telemetry, this);
         flipper = new org.firstinspires.ftc.teamcode.teleop.Flipper(cBot, telemetry, this);
 
@@ -63,7 +60,7 @@ public class TeleOpDrive extends OpMode {
     public void loop() {
 
         driveAround();
-        operateHopper();
+        //operateHopper();
         operateIntake();
         operateFlipper();
 
@@ -76,7 +73,7 @@ public class TeleOpDrive extends OpMode {
     public void stop() {
 
         drive.stop();
-        hopper.reset();
+        flipper.lower();
 
     }
 
@@ -86,18 +83,6 @@ public class TeleOpDrive extends OpMode {
 
     }
 
-    private void operateHopper() {
-
-        if (gamepad2.a) {
-            hopper.raise();
-        } else if (gamepad2.b) {
-            hopper.lower();
-        } else if (gamepad2.x) {
-            hopper.lowerToMinPosition();
-        } else if (gamepad2.y) {
-            hopper.raiseToMaxPosition();
-        }
-    }
 
     private void operateIntake() {
 

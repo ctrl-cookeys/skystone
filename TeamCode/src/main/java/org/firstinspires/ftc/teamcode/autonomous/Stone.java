@@ -1,14 +1,12 @@
 package org.firstinspires.ftc.teamcode.autonomous;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class Stone {
 
     private LinearOpMode linearOpMode;
-    private OpMode opMode;
 
     private Telemetry telemetry;
     private Robot cBot;
@@ -27,15 +25,8 @@ public class Stone {
 
     }
 
-    public Stone(Robot cBot, Telemetry telemetry, OpMode opMode) {
 
-        this.cBot = cBot;
-        this.opMode = opMode;
-        this.telemetry = telemetry;
-
-    }
-
-    private int getHue(int red, int green, int blue) {
+    public int getHue(int red, int green, int blue) {
 
         float hsvValues [] = {0F, 0F, 0F};
 
@@ -58,17 +49,23 @@ public class Stone {
 
         // if the stone is Yellow, then it is NOT a skystone
         // so, return the opposite boolean value
+
         return !( hue > 30 && hue < 80 );
 
     }
 
     public boolean isLeftSensorYellow() {
 
+        telemetry.addData("R:G:B", "%d, %d, %d", cBot.leftColorSensor.red(), cBot.leftColorSensor.green(), cBot.leftColorSensor.blue());
+
         return !isSkystone(cBot.leftColorSensor.red(), cBot.leftColorSensor.green(), cBot.leftColorSensor.blue());
 
     }
 
     public boolean isRightSensorYellow() {
+
+        telemetry.addData("R:G:B", "%d, %d, %d", cBot.leftColorSensor.red(), cBot.leftColorSensor.green(), cBot.leftColorSensor.blue());
+
 
         return !isSkystone(cBot.rightColorSensor.red(), cBot.rightColorSensor.green(), cBot.rightColorSensor.blue());
 
