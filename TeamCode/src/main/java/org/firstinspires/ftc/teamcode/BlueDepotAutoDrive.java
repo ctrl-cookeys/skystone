@@ -4,32 +4,104 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.autonomous.DirectDrive;
+import org.firstinspires.ftc.teamcode.autonomous.Flipper;
 import org.firstinspires.ftc.teamcode.autonomous.Stone;
 import org.firstinspires.ftc.teamcode.autonomous.Robot;
+import org.firstinspires.ftc.teamcode.autonomous.Intake;
+
 
 @Autonomous(name = "A1_BlueDepotAutoDrive", group = "Auto")
 //@Disabled
 public class BlueDepotAutoDrive extends LinearOpMode {
 
     private final double DEFAULT_DRIVE_TIMEOUT_SECS = 20.0;
-    private final double DEFAULT_DRIVE_POWER        =  0.4;
+    private final double DEFAULT_DRIVE_POWER        =  0.8;
     private final double DEFAULT_ROTATE_POWER       =  0.3;
 
     DirectDrive drive;
     Stone stone;
+    Intake intake;
+    Flipper flipper;
+
+    int driveCounter = 0;
 
     private Robot cBot = new Robot();
 
     @Override
     public void runOpMode() {
 
-        // Initialize Hardware Map - Do this before calling any other method
+        // Initialize Hardware Map - Do this before calling any other method :)
         cBot.init(hardwareMap);
 
         drive = new DirectDrive(cBot, telemetry, this);
-        stone = new Stone(cBot, telemetry, this);
+        //stone = new Stone(cBot, telemetry, this);
+        intake = new Intake(cBot, telemetry, this);
+        flipper = new Flipper(cBot, telemetry, this);
+
+        //cBot.leftIntake.setPower(0.4);
+        //cBot.rightIntake.setPower(0.4);
 
         waitForStart();
+
+        while (opModeIsActive()) {
+
+            intake.start();
+
+            if (driveCounter < 1) {
+
+                drive.forward(55, 0.4, 100);
+                drive.rotateRight(3, DEFAULT_ROTATE_POWER);
+                sleep(1000);
+                drive.rotateLeft(2, DEFAULT_ROTATE_POWER);
+                sleep(1000);
+                drive.rotateRight(2, DEFAULT_ROTATE_POWER);
+                sleep(1000);
+                drive.backward(34,DEFAULT_DRIVE_POWER,100);
+                drive.rotateLeft(85,DEFAULT_ROTATE_POWER);
+                drive.backward(72, DEFAULT_DRIVE_POWER,100);
+                flipper.raise();
+                sleep(1000);
+                flipper.lower();
+                drive.forward(47, DEFAULT_DRIVE_POWER, 100);
+                drive.rotateRight(20,DEFAULT_ROTATE_POWER);
+                sleep(1000);
+                drive.rotateLeft(2, DEFAULT_ROTATE_POWER);
+                sleep(1000);
+                drive.rotateRight(2, DEFAULT_ROTATE_POWER);
+                sleep(1000);
+                drive.forward(25, 0.6, 100);//for second block
+                sleep(1000);
+                drive.backward(25, DEFAULT_DRIVE_POWER, 100);
+                drive.rotateLeft(25,DEFAULT_ROTATE_POWER);
+                drive.backward(56, DEFAULT_DRIVE_POWER, 100); //original was 60
+                flipper.raise();
+                sleep(1000);
+                flipper.lower();
+                drive.forward(22, DEFAULT_DRIVE_POWER, 100);
+                drive.rotateRight(15,DEFAULT_ROTATE_POWER); //new
+                drive.forward(10, DEFAULT_DRIVE_POWER, 100);
+
+
+
+            }
+
+            if (driveCounter < 1) {
+                driveCounter++;
+            }
+
+        }
+
+        //intake.start();
+        //drive.forward(50, 0.8, 100);
+        //drive.rotateRight(3, 1);
+        //intake.stop();
+
+        /*
+        drive.forward(2, 0.3, 100);
+        intake.stop();
+        drive.rotateRight(10, 0.5);
+        drive.forward(20, 0.3,100);
+        */
 
     }
 
