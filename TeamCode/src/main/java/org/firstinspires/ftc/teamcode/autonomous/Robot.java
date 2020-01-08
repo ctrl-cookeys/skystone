@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 
 
+
 /* Copyright (c) 2017 FIRST. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -61,22 +62,27 @@ import com.qualcomm.robotcore.hardware.DistanceSensor;
 
 public class Robot
 {
-    protected DcMotor leftDrive   = null;
-    protected DcMotor rightDrive  = null;
+    public DcMotor leftDrive   = null;
+    public DcMotor rightDrive  = null;
 
-    protected DcMotor leftIntake   = null;
-    protected DcMotor rightIntake = null;
+    public DcMotor leftIntake   = null;
+    public DcMotor rightIntake = null;
 
 
-    protected CRServo leftHopperArm = null;
-    protected CRServo rightHopperArm = null;
+    public CRServo leftHopperArm = null;
+    public CRServo rightHopperArm = null;
 
-    protected ColorSensor leftColorSensor = null;
-    protected ColorSensor rightColorSensor = null;
+    public ColorSensor leftColorSensor = null;
+    public ColorSensor rightColorSensor = null;
 
-    protected Servo flipper = null;
+    public DistanceSensor leftDistanceSensor = null;
+    public DistanceSensor rightDistanceSensor = null;
 
-    protected BNO055IMU imu;
+    public Servo flipper = null;
+    public Servo grabber = null;
+
+
+    public BNO055IMU imu;
 
     /* local OpMode members. */
     HardwareMap hwMap =  null;
@@ -91,12 +97,12 @@ public class Robot
         // Save reference to Hardware map
         hwMap = ahwMap;
 
-        //initDriveMotors();
-        //initIntakeMotors();
-        //initHopperCRServos();
-        initColorSensors();
-        //initFlipper();
-        //initImu();
+        initDriveMotors();
+        initIntakeMotors();
+        //initColorDistanceSensors();
+        initGrabber();
+        initFlipper();
+        initImu();
 
     }
 
@@ -144,32 +150,31 @@ public class Robot
 
     }
 
-    /**
-     *  Define and Initialize Hopper Servos
-     */
-    private void initHopperCRServos() {
-
-        leftHopperArm =   hwMap.crservo.get("left_Servo");
-        rightHopperArm =  hwMap.crservo.get("right_Servo");
-
-        leftHopperArm.setDirection(CRServo.Direction.FORWARD);
-        rightHopperArm.setDirection(CRServo.Direction.REVERSE);
-
-    }
 
     /**
      *  Define and Initialize Color Sensors
      */
-    private void initColorSensors(){
+    private void initColorDistanceSensors(){
 
         leftColorSensor = hwMap.get(ColorSensor.class, "left_color");
         rightColorSensor = hwMap.get(ColorSensor.class, "right_color");
+
+        leftDistanceSensor = hwMap.get(DistanceSensor.class, "left_color");
+        rightDistanceSensor = hwMap.get(DistanceSensor.class, "right_color");
 
     }
 
     private void initFlipper() {
 
         flipper = hwMap.get(Servo.class, "flipper");
+
+        // To be initialized with other parameters
+
+    }
+
+    private void initGrabber() {
+
+        grabber = hwMap.get(Servo.class, "grabber");
 
         // To be initialized with other parameters
 

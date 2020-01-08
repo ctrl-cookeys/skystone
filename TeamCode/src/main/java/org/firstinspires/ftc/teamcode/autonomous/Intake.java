@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.autonomous;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -11,7 +12,7 @@ public class Intake {
     private Telemetry telemetry;
     private Robot cBot;
 
-    private ElapsedTime motorsRuntime = new ElapsedTime();
+    private ElapsedTime intakeRuntime = new ElapsedTime();
 
     public Intake(Robot cBot, Telemetry telemetry, LinearOpMode linearOpMode) {
 
@@ -22,16 +23,30 @@ public class Intake {
     }
 
     public void start() {
-// Original power = 0.6
-        motorsRuntime.reset();
-        cBot.leftIntake.setPower(0.4);
-        cBot.rightIntake.setPower(0.4);
 
+        cBot.leftIntake.setPower(0.2); //changed from 3 to 2
+        cBot.rightIntake.setPower(0.2); //changed from 3 to 2
     }
+
+    public void start(int timeoutSeconds) {
+
+        intakeRuntime.reset();
+
+        while (linearOpMode.opModeIsActive() &&
+                (intakeRuntime.seconds() < timeoutSeconds))
+        {
+
+            cBot.leftIntake.setPower(0.4);
+            cBot.rightIntake.setPower(0.4);
+        }
+    }
+
+
+
 
     public void stop() {
 
-        motorsRuntime.reset();
+        intakeRuntime.reset();
         cBot.leftIntake.setPower(0);
         cBot.rightIntake.setPower(0);
 
@@ -39,8 +54,8 @@ public class Intake {
 
     public void reverse(){
 
-        cBot.leftIntake.setPower(-1);
-        cBot.rightIntake.setPower(-1);
+        cBot.leftIntake.setPower(-0.4);
+        cBot.rightIntake.setPower(-0.4);
     }
 
     public void eject() {
@@ -51,13 +66,13 @@ public class Intake {
 
     public double getRuntime() {
 
-        return motorsRuntime.seconds();
+        return intakeRuntime.seconds();
 
     }
 
     public double getStoppedTime() {
 
-        return motorsRuntime.seconds();
+        return intakeRuntime.seconds();
     }
 
     public double getLeftIntakePower() {

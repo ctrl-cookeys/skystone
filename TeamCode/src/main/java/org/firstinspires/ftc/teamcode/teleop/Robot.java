@@ -59,8 +59,8 @@ import com.qualcomm.robotcore.hardware.DistanceSensor;
 
 public class Robot
 {
-    protected DcMotor leftDrive   = null;
-    protected DcMotor rightDrive  = null;
+    public DcMotor leftDrive   = null;
+    public DcMotor rightDrive  = null;
 
     protected DcMotor leftIntake   = null;
     protected DcMotor rightIntake = null;
@@ -71,6 +71,7 @@ public class Robot
     protected ColorSensor rightColorSensor = null;
 
     protected Servo flipper = null;
+    public Servo grabber = null;
 
     protected BNO055IMU imu;
 
@@ -90,6 +91,7 @@ public class Robot
         initDriveMotors();
         initIntakeMotors();
         //initColorSensors();
+        initGrabber();
         initFlipper();
         initImu();
 
@@ -129,7 +131,7 @@ public class Robot
         rightIntake   = hwMap.get(DcMotor.class, "right_intake");
 
         leftIntake.setDirection(DcMotor.Direction.REVERSE);
-        rightIntake.setDirection(DcMotor.Direction.REVERSE);
+        rightIntake.setDirection(DcMotor.Direction.FORWARD);
 
         // Set all motors to zero power
         leftIntake.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -152,6 +154,14 @@ public class Robot
     private void initFlipper() {
 
         flipper = hwMap.get(Servo.class, "flipper");
+
+        // To be initialized with other parameters
+
+    }
+
+    private void initGrabber() {
+
+        grabber = hwMap.get(Servo.class, "grabber");
 
         // To be initialized with other parameters
 
