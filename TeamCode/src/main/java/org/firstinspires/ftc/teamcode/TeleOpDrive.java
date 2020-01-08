@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.teleop.Drive;
 
 
 
-@TeleOp(name = "T1_TeleDrive", group = "CBot")
+@TeleOp(name = "T1_TeleDrive", group = "LQ")
 //@Disabled
 public class TeleOpDrive extends OpMode {
 

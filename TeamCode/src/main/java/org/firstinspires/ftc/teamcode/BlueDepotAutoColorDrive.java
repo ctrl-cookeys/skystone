@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.autonomous.Intake;
 import org.firstinspires.ftc.teamcode.autonomous.Robot;
 import org.firstinspires.ftc.teamcode.autonomous.Stone;
 
-@Autonomous(name = "A1_BlueDepotAutoColorDrive", group = "Auto")
+@Autonomous(name = "A1_BlueDepotAutoColorDrive", group = "LQ")
 @Disabled
 public class BlueDepotAutoColorDrive extends LinearOpMode {
 

@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.teleop.Grabber;
 import org.firstinspires.ftc.teamcode.teleop.Robot;
 
 
-@TeleOp(name = "TestGrabber", group = "CBot")
+@TeleOp(name = "TestGrabber", group = "LQ")
 //@Disabled
 public class TestGrabber extends OpMode {
 

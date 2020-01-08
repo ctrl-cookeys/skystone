@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.autonomous.Robot;
 import org.firstinspires.ftc.teamcode.autonomous.Intake;
 
 
-@Autonomous(name = "A1_BlueDepotAutoDrive", group = "Auto")
+@Autonomous(name = "A1_BlueDepotAutoDrive", group = "LQ")
 //@Disabled
 public class BlueDepotAutoDrive extends LinearOpMode {
 
