@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
+//Define objects in the class
 public class Intake {
     /*
 
@@ -28,14 +29,16 @@ public class Intake {
 
     }
 
+    // Set start speed for left and right intake wheels
     public void start() {
     //This starts the intake system at a speed of .15
         motorsRuntime.reset();
-        cBot.leftIntake.setPower(0.15);
-        cBot.rightIntake.setPower(0.15);
+        cBot.leftIntake.setPower(0.5);
+        cBot.rightIntake.setPower(0.5);
 
     }
 
+    // Set stop speed for left and right intake wheels
     public void stop() {
     //This stops the intake system  at a speed of 0
         motorsRuntime.reset();
@@ -44,24 +47,29 @@ public class Intake {
 
     }
 
+    // Set reverse speed for left and right intake wheels
     public void reverse(){
         //This pushes the block inwards at a speed of .15
         cBot.leftIntake.setPower(-0.15);
         cBot.rightIntake.setPower(-0.15);
     }
 
+    // If the stone gets stuck in the arms of the intake, then we need to "spit the stone out"
+    //The following method will eject the stone out of the intake's grasp
     public void eject() {
 //This pushes the block outwards at a speed of .15
         cBot.leftIntake.setPower(0.15);
         cBot.rightIntake.setPower(0.15);
     }
 
+    //Provide robot with the run time
     public double getRuntime() {
 
         return motorsRuntime.seconds();
 
     }
 
+    //Provide robot with the time to stop at
     public double getStoppedTime() {
 
         return motorsRuntime.seconds();

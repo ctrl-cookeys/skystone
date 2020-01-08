@@ -20,16 +20,12 @@ import org.firstinspires.ftc.teamcode.Constants;
 
 public class ChainDrive {
 
+    private final ElapsedTime driveRuntime = new ElapsedTime();
     private LinearOpMode linearOpMode;
     private Telemetry telemetry;
     private Robot cBot;
-
     private double globalAngle;
-
     private Orientation lastAngles = new Orientation();
-
-
-    private final ElapsedTime driveRuntime = new ElapsedTime();
 
     /*
      * Constructor
@@ -77,7 +73,7 @@ public class ChainDrive {
     /**
      * Drive forward
      **/
-    public void forward(double distanceInches, double power,  double timeoutSeconds) {
+    public void forward(double distanceInches, double power, double timeoutSeconds) {
 
         driveByEncoder(power, distanceInches, distanceInches, timeoutSeconds);
 
@@ -94,8 +90,8 @@ public class ChainDrive {
 
     /**
      * Turn Left using Motors
-     * @deprecated
-     * use rotateLeft instead
+     *
+     * @deprecated use rotateLeft instead
      **/
     @Deprecated
     public void turnLeft(double distanceInches, double power, double timeoutSeconds) {
@@ -106,8 +102,8 @@ public class ChainDrive {
 
     /**
      * Turn Right using Motors
-     * @deprecated
-     * use rotateRight instead
+     *
+     * @deprecated use rotateRight instead
      **/
     @Deprecated
     public void turnRight(double distanceInches, double power, double timeoutSeconds) {
@@ -339,8 +335,7 @@ public class ChainDrive {
     private void calibrateGyro() {
 
         // make sure the imu gyro is calibrated before continuing.
-        while (!linearOpMode.isStopRequested() && !cBot.imu.isGyroCalibrated())
-        {
+        while (!linearOpMode.isStopRequested() && !cBot.imu.isGyroCalibrated()) {
             this.linearOpMode.sleep(50);
             linearOpMode.idle();
         }

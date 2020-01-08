@@ -7,14 +7,11 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class Flipper {
 
 
+    final double MIN_FLIPPER_POWER = 0;
+    final double MAX_FLIPPER_POWER = 1;
     private Telemetry telemetry;
     private Robot cBot;
     private LinearOpMode linearOpMode;
-
-    final double MIN_FLIPPER_POWER = 0;
-    final double MAX_FLIPPER_POWER = 1;
-
-
     private double servoPower = MIN_FLIPPER_POWER; //Initialize the FLIPPER to the starting position
 
     /*
@@ -26,14 +23,18 @@ public class Flipper {
         this.linearOpMode = linearOpMode;
         this.telemetry = telemetry;
 
+        lower();
     }
-public void raise(){
-    cBot.flipper.setPosition(MAX_FLIPPER_POWER);
-}
-public void lower(){
-    cBot.flipper.setPosition(MIN_FLIPPER_POWER);
 
-}
+    public void lower() {
+
+        cBot.flipper.setPosition(MAX_FLIPPER_POWER);
+    }
+
+    public void raise() {
+        cBot.flipper.setPosition(MIN_FLIPPER_POWER);
+
+    }
 
 
 }

@@ -5,14 +5,14 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.autonomous.DirectDrive;
 import org.firstinspires.ftc.teamcode.autonomous.Flipper;
-import org.firstinspires.ftc.teamcode.autonomous.Stone;
-import org.firstinspires.ftc.teamcode.autonomous.Robot;
 import org.firstinspires.ftc.teamcode.autonomous.Intake;
+import org.firstinspires.ftc.teamcode.autonomous.Robot;
+import org.firstinspires.ftc.teamcode.autonomous.Stone;
 
 
-@Autonomous(name = "A1_BlueDepotAutoDrive", group = "Auto")
+@Autonomous(name = "A2_BlueDepotAutoDrive", group = "LQ")
 //@Disabled
-public class BlueDepotAutoDrive extends LinearOpMode {
+public class BlueDepotAutoDrive_2 extends LinearOpMode {
 
     private final double DEFAULT_DRIVE_TIMEOUT_SECS = 20.0;
     private final double DEFAULT_DRIVE_POWER        =  0.8;
@@ -49,11 +49,14 @@ public class BlueDepotAutoDrive extends LinearOpMode {
 
             if (driveCounter < 1) {
 
-                drive.forward(53, 0.4, 100);//original was 55
-                drive.rotateRight(4, DEFAULT_ROTATE_POWER);//3
-                sleep(500);
-                drive.backward(25,DEFAULT_DRIVE_POWER,100);
-                drive.rotateLeft(85,DEFAULT_ROTATE_POWER);
+                drive.backward(30, 0.8, 100);//original was 55
+                drive.rotateRight(10,DEFAULT_ROTATE_POWER);
+                drive.backward(30, 0.8, 100);//original was 55
+                drive.forward(10,DEFAULT_DRIVE_POWER,100);
+                drive.rotateRight(30, DEFAULT_ROTATE_POWER);//40
+
+
+              /*  drive.rotateLeft(85,DEFAULT_ROTATE_POWER);
                 drive.backward(72, DEFAULT_DRIVE_POWER,100);
                 flipper.raise();
                 sleep(1000);
@@ -72,7 +75,7 @@ public class BlueDepotAutoDrive extends LinearOpMode {
                drive.forward(22, DEFAULT_DRIVE_POWER, 100);
                // drive.rotateRight(15,DEFAULT_ROTATE_POWER); //new
                 //drive.forward(10, DEFAULT_DRIVE_POWER, 100);
-
+*/
 
 
             }

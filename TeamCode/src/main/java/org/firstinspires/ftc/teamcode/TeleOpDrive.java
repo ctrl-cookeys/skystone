@@ -34,8 +34,8 @@ public class TeleOpDrive extends OpMode {
         cBot.init(hardwareMap);
 
         drive = new Drive(cBot, telemetry, this);
-        intake = new org.firstinspires.ftc.teamcode.teleop.Intake(cBot, telemetry, this);
-        flipper = new org.firstinspires.ftc.teamcode.teleop.Flipper(cBot, telemetry, this);
+        intake = new Intake(cBot, telemetry, this);
+        flipper = new Flipper(cBot, telemetry, this);
 
     }
 
@@ -60,7 +60,6 @@ public class TeleOpDrive extends OpMode {
     public void loop() {
 
         driveAround();
-        //operateHopper();
         operateIntake();
         operateFlipper();
 
@@ -74,6 +73,7 @@ public class TeleOpDrive extends OpMode {
 
         drive.stop();
         flipper.lower();
+        intake.stop();
 
     }
 
@@ -86,19 +86,19 @@ public class TeleOpDrive extends OpMode {
 
     private void operateIntake() {
 
-        if (gamepad1.a) {
+        if (gamepad2.a) {
             intake.start();
-        } else if (gamepad1.x) {
+        } else if (gamepad2.x) {
             intake.stop();
-        } else if (gamepad1.b) {
+        } else if (gamepad2.b) {
             intake.reverse();
-        } else if (gamepad1.y) {
-            intake.eject();
+        } else if (gamepad2.y) {
+            intake.start();
         }
 
     }
 
-    private void operateFlipper(){
+   private void operateFlipper(){
         if(gamepad2.right_trigger > 0) {
             flipper.lower();
         } else {

@@ -15,10 +15,13 @@ import org.firstinspires.ftc.teamcode.teleop.Robot;
 public class Flipper {
 
 
+    final double MIN_FLIPPER_POWER = 0;
+    final double MAX_FLIPPER_POWER = 1;
     private Telemetry telemetry;
     private Robot cBot;
     private OpMode opMode;
 
+<<<<<<< HEAD
     final double MIN_FLIPPER_POWER = 0; //the FLIPPER'S minimum position (0)
     final double MAX_FLIPPER_POWER = 1; //the FLIPPER'S maximum position (1)
 
@@ -26,6 +29,10 @@ public class Flipper {
      * Initialize the FLIPPER to the starting position
      */
     private double servoPower = MIN_FLIPPER_POWER;
+=======
+
+    private double servoPower = MIN_FLIPPER_POWER; //Initialize the FLIPPER to the starting position
+>>>>>>> 7fbffd1cc9449802a408bf47eece66453f12de0c
 
     /*
      * Constructor
@@ -39,22 +46,33 @@ public class Flipper {
         raise();
 
     }
+<<<<<<< HEAD
+=======
+
+    public void raise() {
+>>>>>>> 7fbffd1cc9449802a408bf47eece66453f12de0c
 
     /*
      * Raises the FLIPPER and sets it to its maximum position (1)
      */
 public void raise(){
         cBot.flipper.setPosition(MAX_FLIPPER_POWER);
+<<<<<<< HEAD
 }
 
 /*
  * Lowers the FLIPPER and sets it to its minimum position (0)
  */
 public void lower(){
+=======
+    }
+>>>>>>> 7fbffd1cc9449802a408bf47eece66453f12de0c
 
-    cBot.flipper.setPosition(MIN_FLIPPER_POWER);
+    public void lower() {
 
-}
+        cBot.flipper.setPosition(MIN_FLIPPER_POWER);
+
+    }
 
 
 }

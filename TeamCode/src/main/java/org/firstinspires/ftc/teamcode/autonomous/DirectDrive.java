@@ -20,16 +20,14 @@ import org.firstinspires.ftc.teamcode.Constants;
 
 public class DirectDrive {
 
+    private final ElapsedTime driveRuntime = new ElapsedTime();
     private LinearOpMode linearOpMode;
     private Telemetry telemetry;
     private Robot cBot;
-
     private double globalAngle;
-
     private Orientation lastAngles = new Orientation();
 
-
-    private final ElapsedTime driveRuntime = new ElapsedTime();
+    private ColorDistance colorDistance = new ColorDistance(this.cBot, this.telemetry, this.linearOpMode);
 
     /*
      * Constructor
@@ -38,46 +36,17 @@ public class DirectDrive {
 
         this.cBot = cBot;
         this.linearOpMode = linearOpMode;
-        this.telemetry = this.linearOpMode.telemetry;
+        this.telemetry = telemetry;
 
         calibrateGyro();
 
     }
 
-    /**
-     * Code to driveTrain around using direction enums
-     * Note: Using forward, backward, turnLeft, turnRight may be more straightforward
-     *
-     * @param direction      FORWARD, BACKWARD, LEFT_TURN, RIGHT_TURN
-     * @param power          Motor Power
-     * @param distanceInches Distance to driveTrain in inches. Ideally same value for both
-     *                       left and right driveTrain
-     * @param timeoutSeconds If unable to finish driving task within timeoutSeconds seconds
-     *                       abort and move on to the next task. Set this value very carefully!
-     **/
-    @Deprecated
-    public void drive(Direction direction, double distanceInches, double power, double timeoutSeconds) {
-
-        switch (direction) {
-            case FORWARD:
-                driveByEncoder(power, distanceInches, distanceInches, timeoutSeconds);
-                break;
-            case BACKWARD:
-                driveByEncoder(power, -distanceInches, -distanceInches, timeoutSeconds);
-                break;
-            case LEFT_TURN:
-                driveByEncoder(power, -distanceInches, distanceInches, timeoutSeconds);
-                break;
-            case RIGHT_TURN:
-                driveByEncoder(power, distanceInches, -distanceInches, timeoutSeconds);
-                break;
-        }
-    }
 
     /**
      * Drive forward
      **/
-    public void forward(double distanceInches, double power,  double timeoutSeconds) {
+    public void forward(double distanceInches, double power, double timeoutSeconds) {
 
         driveByEncoder(power, distanceInches, distanceInches, timeoutSeconds);
 
@@ -91,31 +60,6 @@ public class DirectDrive {
         driveByEncoder(power, -distanceInches, -distanceInches, timeoutSeconds);
 
     }
-
-    /**
-     * Turn Left using Motors
-     * @deprecated
-     * use rotateLeft instead
-     **/
-    @Deprecated
-    public void turnLeft(double distanceInches, double power, double timeoutSeconds) {
-
-        driveByEncoder(power, -distanceInches, distanceInches, timeoutSeconds);
-
-    }
-
-    /**
-     * Turn Right using Motors
-     * @deprecated
-     * use rotateRight instead
-     **/
-    @Deprecated
-    public void turnRight(double distanceInches, double power, double timeoutSeconds) {
-
-        driveByEncoder(power, distanceInches, -distanceInches, timeoutSeconds);
-
-    }
-
 
     /**
      * Turn Left using IMU
@@ -133,6 +77,26 @@ public class DirectDrive {
         rotate(-degrees, power);
     }
 
+    /**
+     * Drive by Color/Distance Sensor
+     */
+
+    public void driveByProximity(double power, double proximity) {
+
+        cBot.leftDrive.setPower(Math.abs(power));
+        cBot.rightDrive.setPower(Math.abs(power));
+
+        while (linearOpMode.opModeIsActive() && (colorDistance.getLeftDistance() > proximity && colorDistance.getRightDistance() > proximity)) {
+
+            this.telemetry.addData("Distance to stones: ", "%.1f", colorDistance.getLeftDistance());
+            this.telemetry.addData("Distance to stones: ", "%.1f", colorDistance.getRightDistance());
+            this.telemetry.update();
+            this.linearOpMode.sleep(50);
+        }
+
+        stop();
+
+    }
 
     /**
      * Drive using Encoders
@@ -268,7 +232,6 @@ public class DirectDrive {
      *
      * @param degrees Degrees to turn, + is left - is right
      */
-    @SuppressWarnings("StatementWithEmptyBody")
     private void rotate(int degrees, double power) {
         double leftPower, rightPower;
 
@@ -339,18 +302,9 @@ public class DirectDrive {
     private void calibrateGyro() {
 
         // make sure the imu gyro is calibrated before continuing.
-        while (!linearOpMode.isStopRequested() && !cBot.imu.isGyroCalibrated())
-        {
+        while (!linearOpMode.isStopRequested() && !cBot.imu.isGyroCalibrated()) {
             this.linearOpMode.sleep(50);
             linearOpMode.idle();
         }
-    }
-
-    public enum Direction {
-
-        FORWARD,
-        BACKWARD,
-        LEFT_TURN,
-        RIGHT_TURN
     }
 }
