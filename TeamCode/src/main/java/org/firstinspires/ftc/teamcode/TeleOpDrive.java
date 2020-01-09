@@ -7,6 +7,7 @@ import org.firstinspires.ftc.teamcode.teleop.Flipper;
 import org.firstinspires.ftc.teamcode.teleop.Intake;
 import org.firstinspires.ftc.teamcode.teleop.Robot;
 import org.firstinspires.ftc.teamcode.teleop.Drive;
+import org.firstinspires.ftc.teamcode.teleop.Grabber;
 
 
 
@@ -18,6 +19,7 @@ public class TeleOpDrive extends OpMode {
     private Drive drive;
     private Intake intake;
     private Flipper flipper;
+    private Grabber grabber;
 
     private Robot cBot = new Robot();
 
@@ -36,6 +38,7 @@ public class TeleOpDrive extends OpMode {
         drive = new Drive(cBot, telemetry, this);
         intake = new Intake(cBot, telemetry, this);
         flipper = new Flipper(cBot, telemetry, this);
+        grabber = new Grabber(cBot, telemetry, this);
 
     }
 
@@ -62,6 +65,7 @@ public class TeleOpDrive extends OpMode {
         driveAround();
         operateIntake();
         operateFlipper();
+        operateGrabber();
 
     }
 
@@ -103,6 +107,14 @@ public class TeleOpDrive extends OpMode {
             flipper.lower();
         } else {
             flipper.raise();
+        }
+    }
+
+    private void operateGrabber(){
+        if(gamepad1.a) {
+            grabber.engage();
+        } else if (gamepad1.b) {
+            grabber.release();
         }
     }
 }

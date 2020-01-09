@@ -56,16 +56,20 @@ public class TestGrabber extends OpMode {
         driveAround();
         operateGrabber();
 
-
-
+/*
         if (gamepad1.left_bumper) {
+            leftDpadPressed = false;
+        } else if (gamepad1.right_bumper) {
             leftDpadPressed = true;
+        }
+
+        if (leftDpadPressed = false) {
             cBot.leftDrive.setPower(0.2);
             cBot.rightDrive.setPower(0.1);
-        } else if (gamepad1.right_bumper) {
-            leftDpadPressed = false;
-            return;
-        }
+        } else if (leftDpadPressed = true) {
+            cBot.leftDrive.setPower(0);
+            cBot.rightDrive.setPower(0);
+        }*/
 
 
 

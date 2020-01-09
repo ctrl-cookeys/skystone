@@ -7,7 +7,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class Grabber {
 
 
-    final double MIN_FOUNDATION_POWER = 0;
+    final double MIN_FOUNDATION_POWER = 0.5;
     final double MAX_FOUNDATION_POWER = 1;
 
     private Telemetry telemetry;
@@ -24,7 +24,7 @@ public class Grabber {
         this.linearOpMode = linearOpMode;
         this.telemetry = telemetry;
 
-        engage();
+        release();
     }
 
     public void engage() {
