@@ -43,42 +43,26 @@ public class RedTapeAutoFoundationPark extends LinearOpMode {
     private void moveFoundation() {
 
 
-
-
-
-        drive.backward(18, 0.6, DEFAULT_DRIVE_TIMEOUT_SECS);
-     //   sleep(500);
-        drive.backward(10, 0.2, DEFAULT_DRIVE_TIMEOUT_SECS);
-     //   sleep(1000);
+        drive.backward(27, 1, DEFAULT_DRIVE_TIMEOUT_SECS);
         grabber.engage();
         sleep(500);
         drive.forward(30, 0.5, DEFAULT_DRIVE_TIMEOUT_SECS); //org 25
-     //   sleep(500);
+        sleep(500);
         curveDrive(0.2, 0.7, 1000);
         grabber.release();
         sleep(500);
         curveDrive(0, 0.5, 1000);
         drive.backward(15, 0.2, DEFAULT_DRIVE_TIMEOUT_SECS);
-       // sleep(500);
         drive.rotateRight(40, DEFAULT_ROTATE_POWER);
-        drive.backward(35, DEFAULT_DRIVE_POWER, DEFAULT_DRIVE_TIMEOUT_SECS);
+        drive.backward(35, 1, DEFAULT_DRIVE_TIMEOUT_SECS);
         drive.rotateLeft(63, DEFAULT_ROTATE_POWER);
         drive.forward(35, DEFAULT_DRIVE_POWER, DEFAULT_DRIVE_TIMEOUT_SECS);
         drive.rotateRight(90,DEFAULT_ROTATE_POWER);
-        drive.forward(35, 0.6, DEFAULT_DRIVE_TIMEOUT_SECS);
+        drive.forward(25, 0.6, DEFAULT_DRIVE_TIMEOUT_SECS);
 
 
+        parkUnderBridge();
 
-
-
-
-        //
-        //grabber.engage();
-       // grabber.release();
-        //drive.rotateLeft(54, DEFAULT_ROTATE_POWER);
-        //drive.forward(7, DEFAULT_DRIVE_POWER, DEFAULT_DRIVE_TIMEOUT_SECS);
-        //drive.rotateRight(60, DEFAULT_ROTATE_POWER);
-        //drive.forward(47, DEFAULT_DRIVE_POWER, DEFAULT_DRIVE_TIMEOUT_SECS);
 
     }
 
@@ -89,8 +73,14 @@ public class RedTapeAutoFoundationPark extends LinearOpMode {
      */
     private void parkUnderBridge() {
 
-        drive.backward(10, DEFAULT_DRIVE_POWER, DEFAULT_DRIVE_TIMEOUT_SECS);
-        drive.rotateRight(3, DEFAULT_ROTATE_POWER);
+        drive.backward(5, 1, DEFAULT_DRIVE_TIMEOUT_SECS);
+        drive.rotateRight(70, 0.8);
+        drive.forward(23, 1, DEFAULT_DRIVE_TIMEOUT_SECS);
+        drive.rotateRight(20, 0.8);
+        drive.forward(10, 1, DEFAULT_DRIVE_TIMEOUT_SECS);
+
+
+
     }
 
     private void curveDrive(double leftPower, double rightPower, int sleepTimeMilliseconds) {
