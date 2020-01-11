@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.autonomous.DirectDrive;
@@ -9,7 +10,8 @@ import org.firstinspires.ftc.teamcode.autonomous.Robot;
 
 
 @Autonomous(name = "RedTapeAutoFoundationPark2", group = "LQ")
-//@Disabled
+@Disabled
+@Deprecated
 public class RedTapeAutoFoundationPark2 extends LinearOpMode {
 
     private final double DEFAULT_DRIVE_TIMEOUT_SECS = 20.0;

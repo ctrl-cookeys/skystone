@@ -52,7 +52,8 @@ import com.qualcomm.robotcore.hardware.SwitchableLight;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 @TeleOp(name = "Sample Color Sensor Test", group = "Sensor")
-//@Disabled
+@Disabled
+@Deprecated
 public class ColorSensorTest extends LinearOpMode {
 
   /** The colorSensor field will contain a reference to our color sensor hardware object */

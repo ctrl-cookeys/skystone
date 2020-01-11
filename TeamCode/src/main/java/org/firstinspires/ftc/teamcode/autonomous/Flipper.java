@@ -7,8 +7,8 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class Flipper {
 
 
-    final double MIN_FLIPPER_POWER = 0;
-    final double MAX_FLIPPER_POWER = 1;
+    final double MIN_FLIPPER_POWER = 0; // raise position
+    final double MAX_FLIPPER_POWER = 1; // lower position (default)
     private Telemetry telemetry;
     private Robot cBot;
     private LinearOpMode linearOpMode;

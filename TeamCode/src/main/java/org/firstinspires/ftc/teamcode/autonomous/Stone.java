@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
+@Deprecated
 public class Stone {
 
     private LinearOpMode linearOpMode;

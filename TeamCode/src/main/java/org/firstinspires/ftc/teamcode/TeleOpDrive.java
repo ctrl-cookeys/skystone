@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.teleop.Grabber;
 
 
 
-@TeleOp(name = "T1_TeleDrive", group = "LQ")
+@TeleOp(name = "TeleDrive", group = "LQ")
 //@Disabled
 public class TeleOpDrive extends OpMode {
 

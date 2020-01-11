@@ -17,6 +17,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 
 @Autonomous(name = "RevColorSensorTest1", group = "Sensor")
+@Disabled
+@Deprecated
 public class RevColorSensorTest extends LinearOpMode {
 
     ColorSensor leftColorSensor = null;

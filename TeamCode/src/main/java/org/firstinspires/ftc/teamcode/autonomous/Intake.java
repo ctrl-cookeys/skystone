@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
@@ -24,8 +25,15 @@ public class Intake {
 
     public void start() {
 
-        cBot.leftIntake.setPower(0.2); //changed from 3 to 2
-        cBot.rightIntake.setPower(0.2); //changed from 3 to 2
+        //TODO: Power has changed from 0.2 to 0.3; will this affect the TeleOp program?
+        cBot.leftIntake.setPower(0.5); //changed from 2 to 3
+        cBot.rightIntake.setPower(0.5); //changed from 2 to 3
+    }
+
+    public void start(double leftIntakePower, double rightIntakePower) {
+        cBot.leftIntake.setPower(Range.clip(leftIntakePower, 0, 1)); //changed from 2 to 3
+        cBot.leftIntake.setPower(Range.clip(rightIntakePower, 0, 1)); //changed from 2 to 3
+
     }
 
     public void start(int timeoutSeconds) {

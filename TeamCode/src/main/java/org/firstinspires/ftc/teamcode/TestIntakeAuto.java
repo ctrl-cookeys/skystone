@@ -41,7 +41,7 @@ import org.firstinspires.ftc.teamcode.autonomous.Robot;
 
 @Autonomous(name="Basic: TestIntakeAuto", group="Iterative Opmode")
 @Disabled
-
+@Deprecated
 public class TestIntakeAuto extends LinearOpMode {
 
 

@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -10,6 +11,8 @@ import org.firstinspires.ftc.teamcode.autonomous.Stone;
 import org.firstinspires.ftc.teamcode.autonomous.Robot;
 
 @Autonomous(name = "TestColor", group = "Test")
+@Disabled
+@Deprecated
 public class TestColor extends LinearOpMode {
 
     private Stone stone;

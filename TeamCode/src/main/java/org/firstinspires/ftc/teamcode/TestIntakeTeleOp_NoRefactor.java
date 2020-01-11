@@ -40,6 +40,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 @TeleOp(name="TestIntakeTeleOp_NoRefactor", group="Test")
 @Disabled
+@Deprecated
 public class TestIntakeTeleOp_NoRefactor extends OpMode     {
 
     private DcMotor leftIntake;

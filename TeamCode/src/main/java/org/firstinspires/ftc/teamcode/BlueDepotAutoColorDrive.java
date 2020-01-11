@@ -12,6 +12,7 @@ import org.firstinspires.ftc.teamcode.autonomous.Stone;
 
 @Autonomous(name = "A1_BlueDepotAutoColorDrive", group = "LQ")
 @Disabled
+@Deprecated
 public class BlueDepotAutoColorDrive extends LinearOpMode {
 
     private final double DEFAULT_DRIVE_TIMEOUT_SECS = 20.0;
