@@ -71,9 +71,11 @@ public class BlueDepotAutoDrive extends LinearOpMode {
                 drive.forward(12,0.2,1000);
                 drive.backward(20,1,100);
                 drive.rotateLeft(15,0.6);
-                drive.backward(15,1,100);
+                drive.backward(35,1,100);
                 flipper.raise();
                 sleep(500);
+                drive.forward(15,1,100);
+
                 /* drive.rotateRight(10,DEFAULT_ROTATE_POWER);
                 drive.backward(30, 0.8, 100);//original was 55
                 drive.forward(10,DEFAULT_DRIVE_POWER,100);
