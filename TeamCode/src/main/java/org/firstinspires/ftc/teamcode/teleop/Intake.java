@@ -33,11 +33,17 @@ public class Intake {
     public void start() {
     //This starts the intake system at a speed of .15
         motorsRuntime.reset();
-        cBot.leftIntake.setPower(0.5);
-        cBot.rightIntake.setPower(0.5);
+        cBot.leftIntake.setPower(0.5);//original was 0.5
+        cBot.rightIntake.setPower(0.5);//original was 0.5
 
     }
+    public void slowintake() {
+        //This starts the intake system at a speed of .15
+        motorsRuntime.reset();
+        cBot.leftIntake.setPower(0.3);//original was 0.5
+        cBot.rightIntake.setPower(0.3);//original was 0.5
 
+    }
     // Set stop speed for left and right intake wheels
     public void stop() {
     //This stops the intake system  at a speed of 0

@@ -97,7 +97,8 @@ public class TeleOpDrive extends OpMode {
         } else if (gamepad2.b) {
             intake.reverse();
         } else if (gamepad2.y) {
-            intake.start();
+         //   intake.start();
+            intake.slowintake();
         }
 
     }

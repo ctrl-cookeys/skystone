@@ -11,6 +11,9 @@ public class Flipper {
 
     final double MIN_FLIPPER_POWER = 0;
     final double MAX_FLIPPER_POWER = 1;
+    //Below is only for first match
+    //final double MIN_FLIPPER_POWER = 1;
+    //final double MAX_FLIPPER_POWER = 0;
     private Telemetry telemetry;
     private Robot cBot;
     private OpMode opMode;
